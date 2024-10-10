@@ -1,23 +1,21 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { Text } from '../../atoms';
+import { Container, Text } from '../../atoms';
 
 const Card = ({ rapper }) => {
     return (
-        <View style={styles.card}>
+
       
-            <Image source={{ uri: rapper.image }} style={styles.image} />
-            <View style={styles.content}>
+        <Container.Card style={styles.content}>
+                <Image source={{ uri: rapper.image }} style={styles.image} />
                 <Text.Name content={rapper.name} /> 
-                <View style={styles.statsContainer}>
+                <Container.Text style={styles.statsContainer}>
                     <Text.State label="Attaque :" value={rapper.attack} />
                     <Text.State label="Défense :" value={rapper.defense} />
-                </View>
-                <View style={styles.rarityContainer}>
                     <Text.Rarity rarity={rapper.rarity} />
-                </View>
-            </View>
-        </View>
+                </Container.Text>
+        </Container.Card>
+
     );
 };
 
