@@ -1,7 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import Card from './components/molecules/Cards';
+import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
+import Card from './components/molecules/Cards/Cards';
+
 export default function App() {
   const rapper = {
     name: 'Booba',
@@ -19,21 +20,29 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar style="auto" />
-      <ScrollView>
-        <Card rapper={rapper} />
-        <Card rapper={rapper2} />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.cardContainer}>
+          <Card rapper={rapper} />
+          <Card rapper={rapper2} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f00',
+  },
+  scrollViewContent: {
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  cardContainer: {
+    width: '90%',
+    alignItems: 'center',
   },
 });

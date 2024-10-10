@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import NameText from '../atoms/NameText';
-import StatText from '../atoms/StateText';
-import RarityText from '../atoms/RarityText';
+import NameText from '../../atoms/NameText';
+import StatText from '../../atoms/StateText';
+import RarityText from '../../atoms/RarityText';
 
 const Card = ({ rapper }) => {
     return (
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 15,
         alignItems: 'center',
+        width: 200,
+        height: 400,
+        textAlign: 'center',
     },
     image: {
         width: 100,
