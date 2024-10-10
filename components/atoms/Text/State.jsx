@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 
-const StatText = ({ label, value }) => {
+const State = ({ label, value }) => {
     return (
         <View style={styles.stat}>
             <Text style={styles.label}>{label}</Text>
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default StatText;
+export default State;
