@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Menu from './components/molecules/Menu';
+import FooterNavBar from './components/molecules/Navbar/FooterNavbar';
 
-export default function App() {
+const App = () => {
+  const [menu, setMenu] = useState('home');
+
+  const displayContent = () => {
+    switch (menu) {
+      case 'profile':
+        return <Text>Profile Content</Text>;
+      case 'home':
+      default:
+        return <Text>Home Content</Text>;
+      case 'Account':
+        return <Text>Account Content</Text>;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Menu
+        onMenuChange={(slug) => setMenu(slug)}
+        configs={[
+          { displayName: 'Profile', slug: 'profile' },
+          { displayName: 'Home', slug: 'home' },
+          { displayName: 'Account', slug: 'Account' },
+        ]}
+      />
+      <View>{displayContent()}</View>
+      <FooterNavBar />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });
+
+export default App;
