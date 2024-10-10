@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Image, Text } from '../../atoms'; 
+import { StyleSheet } from 'react-native';
+import { Container, Image, Text } from '../../atoms'; 
 
 const ProfileHeader = ({ user }) => {
   return (
-    <View style={styles.container}>
+    <Container.Profil style={styles.container}>
       <Image.Image src={{ uri: user.photo }} style={styles.image} alt="Photo de profil" /> 
-      <View style={styles.textContainer}>
+      <Container.Text style={styles.textContainer}>
         <Text.Name content={user.name} /> 
         <Text.Name content={user.email}  />
-      </View>
-    </View>
+      </Container.Text>
+    </Container.Profil>
   );
 };
 
