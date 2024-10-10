@@ -7,8 +7,8 @@ const ProfileHeader = ({ user }) => {
     <View style={styles.container}>
       <Image.Image src={{ uri: user.photo }} style={styles.image} alt="Photo de profil" /> 
       <View style={styles.textContainer}>
-        <Text.Name content={user.name} style={styles.name} /> 
-        <Text.Name content={user.email} style={styles.email} />
+        <Text.Name content={user.name} /> 
+        <Text.Name content={user.email}  />
       </View>
     </View>
   );
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: 120,
   },
   image: {
     width: 80,

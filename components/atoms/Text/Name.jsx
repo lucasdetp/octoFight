@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text as RNText, StyleSheet } from 'react-native';
 
-const Name = ({ children }) => {
-    return <Text style={styles.name}>{children}</Text>;
-};
+const Name = ({ content, style }) => {
+    return <RNText style={style}>{content}</RNText>;
+  };
 
 const styles = StyleSheet.create({
     name: {

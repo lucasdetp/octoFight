@@ -8,7 +8,7 @@ const Card = ({ rapper }) => {
       
             <Image source={{ uri: rapper.image }} style={styles.image} />
             <View style={styles.content}>
-                <Text.Name>{rapper.name}</Text.Name>
+                <Text.Name content={rapper.name} /> 
                 <View style={styles.statsContainer}>
                     <Text.State label="Attaque :" value={rapper.attack} />
                     <Text.State label="Défense :" value={rapper.defense} />

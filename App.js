@@ -26,8 +26,8 @@ export default function App() {
         <Card rapper={rapper} />
         <Card rapper={rapper2} />
       </ScrollView> 
+      <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} />
      </SafeAreaView>
-    // <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} />
   );
 }
 
