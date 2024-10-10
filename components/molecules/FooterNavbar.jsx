@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FooterIcon from '../atoms/Icons/FooterIcons';
+import { Icons } from '../atoms'; 
 
 const FooterNavBar = () => {
     return (
         <View style={styles.footerContainer}>
-            <FooterIcon name="home" size={34} color="#000" />
-            <FooterIcon name="cards" size={34} color="#000" />
-            <FooterIcon name="account" size={34} color="#000" />
+            <Icons.FooterIcon name="home" size={34} color="#000" />
+            <Icons.FooterIcon name="cards" size={34} color="#000" />
+            <Icons.FooterIcon name="account" size={34} color="#000" />
         </View>
     );
 };
