@@ -7,14 +7,14 @@ import { Card, Profil, FooterNavBar } from './components/molecules';
 export default function App() {
   const rapper = {
     name: 'Booba',
-    image: 'https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae',
+    image: 'https://i.scdn.co/image/ab6761610000e5eb96b3ab10e89bad078d125c3a',
     attack: 90,
     defense: 85,
     rarity: 'Légendaire',
   };
   const rapper2 = {
     name: 'GIMS',
-    image: 'https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae',
+    image: 'https://i.scdn.co/image/ab6761610000e5eb77144f838397a467e807df65',
     attack: 80,
     defense: 75,
     rarity: 'Commun',
@@ -27,7 +27,7 @@ export default function App() {
         <Card rapper={rapper} />
         <Card rapper={rapper2} />
       </ScrollView> 
-      <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} />
+      {/* <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} /> */}
       <FooterNavBar />
      </SafeAreaView>
 

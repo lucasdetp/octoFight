@@ -5,9 +5,9 @@ import FooterIcon from '../atoms/Icons/FooterIcons';
 const FooterNavBar = () => {
     return (
         <View style={styles.footerContainer}>
-            <FooterIcon name="home" size={28} color="#000" />
-            <FooterIcon name="cards" size={28} color="#000" />
-            <FooterIcon name="account" size={28} color="#000" />
+            <FooterIcon name="home" size={34} color="#000" />
+            <FooterIcon name="cards" size={34} color="#000" />
+            <FooterIcon name="account" size={34} color="#000" />
         </View>
     );
 };
@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        paddingVertical: 10,
+        paddingVertical: 30,
+        position: 'absolute',
+        bottom: 0,
         backgroundColor: '#f0f0f0',
     },
 });
