@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FooterIcon from '../../atoms/Icons/FooterIcons';
+import FooterIcon from '../atoms/Icons/FooterIcons';
 
 const FooterNavBar = () => {
     return (
