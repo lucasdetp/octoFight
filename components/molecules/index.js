@@ -1,3 +1,6 @@
+import {Card} from "./Card";
+import * as Profil from "./Profil";
 import Menu from './Menu';
 import * as FooterNavBar from './FooterNavbar';
-export { Menu, FooterNavBar };
+
+export { Card, Profil, Menu, FooterNavBar};
