@@ -20,16 +20,14 @@ export default function App() {
   };
 
   return (
-
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="auto" />
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.cardContainer}>
-          <Card rapper={rapper} />
-          <Card rapper={rapper2} />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar style="auto" /> 
+      <ScrollView>
+        <Card rapper={rapper} />
+        <Card rapper={rapper2} />
+      </ScrollView> 
+      <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} />
+     </SafeAreaView>
 
   );
 }
