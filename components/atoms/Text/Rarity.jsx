@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-const RarityText = ({ rarity }) => {
+const Rarity = ({ rarity }) => {
     return (
         <Text style={[styles.rarityValue, { color: getRarityColor(rarity) }]}>
             {rarity}
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RarityText;
+export default Rarity;

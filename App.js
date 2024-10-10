@@ -1,7 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import Card from './components/molecules/Cards';
+import { Card, Profil } from './components/molecules';
+
 export default function App() {
   const rapper = {
     name: 'Booba',
@@ -20,12 +21,13 @@ export default function App() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar style="auto" />
+      <StatusBar style="auto" /> 
       <ScrollView>
         <Card rapper={rapper} />
         <Card rapper={rapper2} />
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollView> 
+     </SafeAreaView>
+    // <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} />
   );
 }
 
