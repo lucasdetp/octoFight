@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
-import Card from './components/molecules/Cards/Cards';
+import { Card, Profil } from './components/molecules';
 
 export default function App() {
   const rapper = {
@@ -20,6 +20,7 @@ export default function App() {
   };
 
   return (
+
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="auto" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -29,6 +30,7 @@ export default function App() {
         </View>
       </ScrollView>
     </SafeAreaView>
+
   );
 }
 

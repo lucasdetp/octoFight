@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-const NameText = ({ children }) => {
+const Name = ({ children }) => {
     return <Text style={styles.name}>{children}</Text>;
 };
 
@@ -13,4 +13,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NameText;
+export default Name;
