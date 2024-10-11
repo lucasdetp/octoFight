@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         elevation: 5,
         margin: 10,
-        padding: 15,
         alignItems: 'center',
     },
 });

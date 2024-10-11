@@ -1,6 +1,7 @@
-import {Card} from "./Card";
+import {ImageNameRappeur} from "./ImageNameRappeur";
 import * as Profil from "./Profil";
 import Menu from './Menu';
 import FooterNavBar from './FooterNavbar';
+import * as Stats from './Stats';
 
-export { Card, Profil, Menu, FooterNavBar};
+export { ImageNameRappeur, Profil, Menu, FooterNavBar, Stats};

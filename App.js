@@ -1,7 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import { Card, Profil, FooterNavBar } from './components/molecules';
+import { Profil, FooterNavBar } from './components/molecules';
+import { Card} from './components/organisme';
 
 
 export default function App() {
@@ -23,11 +24,11 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar style="auto" /> 
-      <ScrollView>
-        <Card rapper={rapper} />
-        <Card rapper={rapper2} />
-      </ScrollView> 
-      {/* <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} /> */}
+        <ScrollView>
+          <Card.CardRappeur rapper={rapper} />
+          <Card.CardRappeur rapper={rapper2} />
+        </ScrollView> 
+        {/* <Profil.ProfileHeader user={{ name: "jul", email: "test@test.fr", photo: "https://i.scdn.co/image/ab6761610000e5ebe66ef18636bf25588abdd2ae" }} /> */}
       <FooterNavBar />
      </SafeAreaView>
 
