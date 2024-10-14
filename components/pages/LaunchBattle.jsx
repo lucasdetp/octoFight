@@ -1,32 +1,36 @@
-import { Battle } from "../templates"
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView, ScrollView } from 'react-native';
+import { Card } from '../organisme';
+import FooterNavBar from '../molecules/FooterNavbar';
 
-const LaunchBattle = ( ) => {
+const LaunchBattle = ({ navigation, route }) => {
 
-// Lance la bataille en api 
-const rapper = {
+  const rapper = {
     name: 'Booba',
-    image: 'https://i.scdn.co/image/ab6761610000e5eb96b3ab10e89bad078d125c3a',
+    image: 'https://url-de-l-image-du-rappeur.com/booba.jpg',
     attack: 90,
     defense: 85,
     rarity: 'Légendaire',
   };
   const rapper2 = {
     name: 'GIMS',
-    image: 'https://i.scdn.co/image/ab6761610000e5eb77144f838397a467e807df65',
+    image: 'https://url-de-l-image-du-rappeur.com/gims.jpg',
     attack: 80,
     defense: 75,
     rarity: 'Commun',
   };
 
-// const player1= {
-//     name:"Alex"
-// }
-return <Battle
-rapper={rapper}
-rapper2={rapper2}
-// profilPlayer1={player1}
-></Battle>
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar style="auto" />
+      <ScrollView>
+        <Card.CardRappeur rapper={rapper} />
+        <Card.CardRappeur rapper={rapper2} />
+      </ScrollView>
+      <FooterNavBar />
+    </SafeAreaView>
+  );
+};
 
-
-}
 export default LaunchBattle;
