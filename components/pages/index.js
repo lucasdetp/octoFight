@@ -1,3 +1,4 @@
-import LaunchBattle from './LaunchBattle';  
+import LaunchBattle from './LaunchBattle';
+import Account from './Account';
 
-export { LaunchBattle };    
+export { LaunchBattle, Account };    

@@ -8,7 +8,7 @@ const FooterNavBar = () => {
 
     return (
         <View style={styles.footerContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Cards')}>
+            <TouchableOpacity onPress={() => navigation.navigate('LaunchBattle')}>
                 <Icons.FooterIcon name="cards" size={34} color="#000" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
