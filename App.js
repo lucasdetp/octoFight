@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import { LaunchBattle } from './components/pages';
+import { LaunchBattle, Login, Register } from './components/pages';
 import { Home } from './components/templates';
 
 const Stack = createStackNavigator();
@@ -11,9 +10,10 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LaunchBattle">
-        <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
   );
