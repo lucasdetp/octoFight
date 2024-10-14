@@ -5,15 +5,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { LaunchBattle } from './components/pages';
 import { Home } from './components/templates';
+import Account from './components/pages/Account';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LaunchBattle">
-        <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+        <Stack.Screen name="Account" component={Account} />
       </Stack.Navigator>
     </NavigationContainer>
   );
