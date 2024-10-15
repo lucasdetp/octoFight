@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const Card = ({ children }) => {
-    return <View style={styles.card}>{children}</View>;
+const Card = ({ children, style }) => {
+    return <View style={[styles.card, style]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#FFFFFF',
+        // backgroundColor: '#FFFFFF',
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         margin: 10,
         padding: 15,
+        width: 200,
         alignItems: 'center',
     },
 });

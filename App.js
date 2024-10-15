@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import FooterNavBar from './components/molecules/FooterNavbar';
 import { LaunchBattle, Login, Register } from './components/pages';
 import { Home } from './components/templates';
 import Account from './components/pages/Account';
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
         <Stack.Screen name="Account" component={Account} />
       </Stack.Navigator>
+      <FooterNavBar />
     </NavigationContainer>
   );
 }
