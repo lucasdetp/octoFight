@@ -7,7 +7,6 @@ const Text = ({ children }) => {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#FFFFFF',
         elevation: 5,
         margin: 10,
         alignItems: 'center',

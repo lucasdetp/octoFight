@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Text } from '../../atoms'; 
+import { Container, Text } from '../../atoms';
 
 const StatsRappeur = ({ attack, defense, rarity }) => {
     return (
