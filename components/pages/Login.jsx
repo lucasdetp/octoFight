@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import api from '../axiosConfig';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
-    const handleLogin = () => {
-        console.log('Login:', email, password);
-        navigation.navigate('HomeNav');
+    const handleLogin = async () => {
+        try {
+            const response = await api.post('/login', {
+                email,
+                password,
+            });
+
+            if (response.status === 200) {
+                console.log('Login successful:', response.data);
+                setMessage('Login successful');
+                navigation.navigate('Home');
+            }
+        } catch (error) {
+            console.error('Login error:', error.response ? error.response.data : error.message);
+            setMessage('Failed to login. Please check your credentials.');
+        }
     };
 
     return (
@@ -19,6 +34,7 @@ const Login = ({ navigation }) => {
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
+                placeholderTextColor="#999"
             />
             <TextInput
                 style={styles.input}
@@ -26,9 +42,15 @@ const Login = ({ navigation }) => {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                placeholderTextColor="#999"
             />
-            <Button title="Login" onPress={handleLogin} />
-            <Text style={styles.registerText} onPress={() => navigation.navigate('Register')}>Don't have an account? Register</Text>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            {message ? <Text style={styles.message}>{message}</Text> : null}
+            <Text style={styles.registerText} onPress={() => navigation.navigate('Register')}>
+                Don't have an account? Register
+            </Text>
         </View>
     );
 };
@@ -41,9 +63,9 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginBottom: 30,
     },
     input: {
         width: '100%',
@@ -51,11 +73,29 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderRadius: 8,
+    },
+    button: {
+        backgroundColor: '#007BFF',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    message: {
+        marginTop: 15,
+        fontSize: 16,
+        color: 'red',
     },
     registerText: {
         marginTop: 15,
-        color: 'blue',
+        color: '#007BFF',
     },
 });
 
