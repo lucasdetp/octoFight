@@ -1,46 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { Card } from '../organisme';
+import axios from 'axios';
 
 const LaunchBattle = ({ navigation, route }) => {
-  const rapper = {
-    name: 'Booba',
-    image: 'https://url-de-l-image-du-rappeur.com/booba.jpg',
-    attack: 90,
-    defense: 85,
-    rarity: 'Légendaire',
-  };
-  const rapper2 = {
-    name: 'GIMS',
-    image: 'https://url-de-l-image-du-rappeur.com/gims.jpg',
-    attack: 80,
-    defense: 75,
-    rarity: 'épique',
-  };
-  const rapper3 = {
-    name: 'JUL',
-    image: 'https://url-de-l-image-du-rappeur.com/gims.jpg',
-    attack: 80,
-    defense: 75,
-    rarity: 'Rare',
-  };
-  const rapper4 = {
-    name: 'PNL',
-    image: 'https://url-de-l-image-du-rappeur.com/gims.jpg',
-    attack: 80,
-    defense: 75,
-    rarity: 'Commun',
-  };
+  const [rappers, setRappers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRappers = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/rappers');
+        setRappers(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des rappeurs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRappers();
+  }, []);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="auto" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Card.CardRappeur rapper={rapper} />
-        <Card.CardRappeur rapper={rapper2} />
-        <Card.CardRappeur rapper={rapper3} />
-        <Card.CardRappeur rapper={rapper4} />
+        {rappers.map((rapper, index) => (
+          <Card.CardRappeur key={index} rapper={rapper} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -58,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cardContainer: {
-    marginBottom: 10, // Pour espacer les cartes entre elles
+    marginBottom: 10,
   },
 });
 

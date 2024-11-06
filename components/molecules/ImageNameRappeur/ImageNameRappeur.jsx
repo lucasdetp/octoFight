@@ -5,8 +5,8 @@ import { Container, Text } from '../../atoms';
 const ImageNameRappeur = ({ rapper }) => {
     return (
         <Container.Text style={styles.content}>
-            <Image source={{ uri: rapper.image }} style={styles.image} />
-            <Text.Name content={rapper.name} /> 
+            <Image source={{ uri: rapper.image_url }} style={styles.image} />
+            <Text.Name content={rapper.name} />
         </Container.Text>
     );
 };
