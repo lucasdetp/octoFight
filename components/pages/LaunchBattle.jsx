@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Card } from '../organisme';
 import axios from 'axios';
 
@@ -36,7 +36,12 @@ const LaunchBattle = ({ navigation, route }) => {
       <StatusBar style="auto" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {rappers.map((rapper, index) => (
-          <Card.CardRappeur key={index} rapper={rapper} />
+          index % 2 === 0 && (
+            <View style={styles.row} key={index}>
+              <Card.CardRappeur rapper={rapper} />
+              {rappers[index + 1] && <Card.CardRappeur rapper={rappers[index + 1]} />}
+            </View>
+          )
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -46,16 +51,14 @@ const LaunchBattle = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    maxHeight: 550,
   },
   scrollViewContent: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    display: "ruby",
-    textAlign: "center",
+    paddingHorizontal: 10,
   },
-  cardContainer: {
-    marginBottom: 10,
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
