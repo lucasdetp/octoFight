@@ -10,19 +10,21 @@ const Rarity = ({ rarity }) => {
 };
 
 const getRarityColor = (rarity) => {
+    if (!rarity) return 'gray';
     switch (rarity.toLowerCase()) {
         case 'légendaire':
-            return '#FFD700';
+            return 'gold';
         case 'épique':
-            return '#9400D3';
+            return 'purple';
         case 'rare':
-            return '#1E90FF';
+            return 'blue';
         case 'commun':
-            return '#808080';
+            return 'green';
         default:
-            return '#000000';
+            return 'gray';
     }
 };
+
 
 const styles = StyleSheet.create({
     rarityValue: {

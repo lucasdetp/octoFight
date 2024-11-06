@@ -1,14 +1,10 @@
 
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, ScrollView } from 'react-native';
-// import { Text } from '../atoms';
-import { Profil, FooterNavBar } from '../molecules';
 import { Card } from '../organisme';
-import { ProfileHeader } from '../molecules/Profil';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../templates';
+// import Home from './index';
 
 const Battle = ({ rapper, rapper2, profilPlayer1 }) => {
 
