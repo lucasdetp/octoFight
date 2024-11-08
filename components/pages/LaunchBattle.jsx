@@ -19,10 +19,6 @@ const LaunchBattle = ({ navigation, route }) => {
     const fetchRappers = async () => {
       try {
         const response = await axios.get('https://286c-176-175-209-131.ngrok-free.app/api/rappers');
-        if (response !== Array) {
-          const response = await axios.get('https://localhost:8000/api/rappers');
-
-        }
         setRappers(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des rappeurs:', error);
@@ -63,7 +59,7 @@ const LaunchBattle = ({ navigation, route }) => {
       };
   
       const response = await axios.post(
-        'http://https://286c-176-175-209-131.ngrok-free.app/api/buy-rapper',
+        'https://286c-176-175-209-131.ngrok-free.app/api/buy-rapper',
         { rapper_id: String(rapperId) },
         config
       );
