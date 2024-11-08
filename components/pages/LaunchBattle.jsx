@@ -59,7 +59,7 @@ const LaunchBattle = ({ navigation, route }) => {
       };
   
       const response = await axios.post(
-        'http://localhost:8000/api/buy-rapper',
+        'http://https://286c-176-175-209-131.ngrok-free.app/api/buy-rapper',
         { rapper_id: String(rapperId) },
         config
       );
