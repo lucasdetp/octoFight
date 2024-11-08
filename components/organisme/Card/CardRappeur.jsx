@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Container } from '../../atoms';
 import { ImageNameRappeur, Stats } from '../../molecules';
 
@@ -34,19 +34,17 @@ const CardRappeur = ({ rapper }) => {
     };
 
     return (
-        <Container.Card style={getCardStyle(rapper.rarity)}>
-            <ImageNameRappeur style={getCardStyle(rapper.rarity)} rapper={rapper} />
-            <Stats.StatsRappeur style={getCardStyle(rapper.rarity)} attack={rapper.attaque} defense={rapper.defense} rarity={rapper.rarity} />
+        <Container.Card style={[styles.cardContainer, getCardStyle(rapper.rarity)]}>
+            <ImageNameRappeur rapper={rapper} />
+            <Stats.StatsRappeur attack={rapper.attaque} defense={rapper.defense} rarity={rapper.rarity} />
         </Container.Card>
     );
 };
 
 const styles = StyleSheet.create({
-    content: {
-        alignItems: 'center',
-        borderRadius: 10,
-        padding: 10,
-        marginVertical: 10,
+    cardContainer: {
+        width: '45%', 
+        marginBottom: 10,
     },
 });
 

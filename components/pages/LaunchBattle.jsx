@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Card } from '../organisme';
 import axios from 'axios';
+import { useTheme } from '../../providers/ThemeProvider';
 
 const LaunchBattle = ({ navigation, route }) => {
   const [rappers, setRappers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isNight } = useTheme();
 
   useEffect(() => {
     const fetchRappers = async () => {
@@ -25,18 +27,33 @@ const LaunchBattle = ({ navigation, route }) => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
+        <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
       <StatusBar style="auto" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {rappers.map((rapper, index) => (
-          <Card.CardRappeur key={index} rapper={rapper} />
+          index % 2 === 0 && (
+            <View style={styles.row} key={index}>
+              <Card.CardRappeur
+                rapper={rapper}
+                backgroundColor={isNight ? '#333' : '#fff'}
+                textColor={isNight ? '#fff' : '#000'}
+              />
+              {rappers[index + 1] && (
+                <Card.CardRappeur
+                  rapper={rappers[index + 1]}
+                  backgroundColor={isNight ? '#333' : '#fff'}
+                  textColor={isNight ? '#fff' : '#000'}
+                />
+              )}
+            </View>
+          )
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -46,16 +63,14 @@ const LaunchBattle = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    maxHeight: 550,
   },
   scrollViewContent: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    display: "ruby",
-    textAlign: "center",
+    paddingHorizontal: 10,
   },
-  cardContainer: {
-    marginBottom: 10,
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
