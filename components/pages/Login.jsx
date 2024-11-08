@@ -19,10 +19,8 @@ const Login = ({ navigation }) => {
                 console.log('Login successful:', response.data);
                 setMessage('Login successful');
 
-                // Enregistrer le jeton dans AsyncStorage
                 await AsyncStorage.setItem('authToken', response.data.token);
 
-                // Naviguer vers la page Home après la connexion réussie
                 navigation.navigate('Home');
             }
         } catch (error) {

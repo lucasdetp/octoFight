@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
-import Button from '../../components/atoms/Button/Button'; // Assurez-vous du bon chemin d'import
+import Button from '../../components/atoms/Button/Button';
 import api from '../axiosConfig';
 
 const Register = ({ navigation }) => {
@@ -20,13 +20,13 @@ const Register = ({ navigation }) => {
                 name,
                 email,
                 password,
-                password_confirmation: confirmPassword, // Ajout du champ password_confirmation
+                password_confirmation: confirmPassword,
             });
 
             if (response.status === 201) {
                 console.log('Registration successful:', response.data);
                 Alert.alert('Succès', 'Inscription réussie');
-                navigation.navigate('Login'); // Naviguer vers la page de connexion après l'inscription réussie
+                navigation.navigate('Login');
             }
         } catch (error) {
             if (error.response) {
