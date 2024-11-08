@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import api from '../axiosConfig';
+import api from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
@@ -10,7 +10,7 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await api.post('/login', {
+            const response = await api.post('https://286c-176-175-209-131.ngrok-free.app/api/login', {
                 email,
                 password,
             });

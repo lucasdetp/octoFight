@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Button from '../../components/atoms/Button/Button'; // Assurez-vous du bon chemin d'import
-import api from '../axiosConfig';
+import api from '../api';
 
 const Register = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -16,7 +16,7 @@ const Register = ({ navigation }) => {
         }
 
         try {
-            const response = await api.post('/register', {
+            const response = await api.post('https://286c-176-175-209-131.ngrok-free.app/api/register', {
                 name,
                 email,
                 password,
