@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Container } from '../../atoms';
 import { ImageNameRappeur, Stats } from '../../molecules';
 
-const CardRappeur = ({ rapper }) => {
+const CardRappeur = ({ rapper, onBuy }) => {
     const getCardStyle = (rarity) => {
         switch (rarity) {
             case 'légendaire':
@@ -37,6 +37,10 @@ const CardRappeur = ({ rapper }) => {
         <Container.Card style={[styles.cardContainer, getCardStyle(rapper.rarity)]}>
             <ImageNameRappeur rapper={rapper} />
             <Stats.StatsRappeur attack={rapper.attaque} defense={rapper.defense} rarity={rapper.rarity} />
+            
+            <TouchableOpacity style={styles.buyButton} onPress={() => onBuy(rapper.id)}>
+                <Text style={styles.buyButtonText}>Acheter</Text>
+            </TouchableOpacity>
         </Container.Card>
     );
 };
@@ -45,7 +49,22 @@ const styles = StyleSheet.create({
     cardContainer: {
         width: '45%', 
         marginBottom: 10,
+        borderRadius: 8,
+        padding: 10,
+        position: 'relative',
     },
+    buyButton: {
+        backgroundColor: '#1E90FF', 
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buyButtonText: {
+        color: '#fff',
+        fontSize: 16,
+    }
 });
 
 export default CardRappeur;
