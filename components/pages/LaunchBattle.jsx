@@ -11,7 +11,7 @@ const LaunchBattle = ({ navigation, route }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/rappers');
+        const response = await axios.get('https://286c-176-175-209-131.ngrok-free.app/api/rappers');
         setRappers(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des rappeurs:', error);
