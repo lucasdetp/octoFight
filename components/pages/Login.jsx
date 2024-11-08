@@ -17,6 +17,7 @@ const Login = ({ navigation }) => {
 
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
+                await AsyncStorage.setItem('token', response.data.token);
                 setMessage('Login successful');
 
                 // Enregistrer le jeton dans AsyncStorage
