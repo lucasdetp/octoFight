@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import api from '../axiosConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const Login = ({ navigation }) => {
 
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
+                await AsyncStorage.setItem('token', response.data.token);
                 setMessage('Login successful');
                 navigation.navigate('Home');
             }
