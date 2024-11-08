@@ -4,7 +4,6 @@ import { SafeAreaView, ScrollView } from 'react-native';
 import { Card } from '../organisme';
 
 import { NavigationContainer } from '@react-navigation/native';
-// import Home from './index';
 
 const Battle = ({ rapper, rapper2, profilPlayer1 }) => {
 

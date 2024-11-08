@@ -3,24 +3,40 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FooterNavBar from './components/molecules/FooterNavbar';
-import { LaunchBattle, Login, Register, Account} from './components/pages';
+import { LaunchBattle, Login, Register, Account } from './components/pages';
 import { Home } from './components/templates';
+import { useColorScheme } from 'react-native';
+import { ThemeProvider } from './providers/ThemeProvider';
+
+
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const colorScheme = useColorScheme();
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
-        <Stack.Screen name="Account" component={Account} />
-      </Stack.Navigator>
-      <FooterNavBar />
-    </NavigationContainer>
+    <ThemeProvider>
+
+      <NavigationContainer>
+
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+          <Stack.Screen name="Account" component={Account} />
+        </Stack.Navigator>
+
+        <FooterNavBar />
+      </NavigationContainer>
+    </ThemeProvider>
+
+
+
   );
+
 }
 
 const styles = StyleSheet.create({

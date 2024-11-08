@@ -1,10 +1,16 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    baseURL: 'https://286c-176-175-209-131.ngrok-free.app/',
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-export default api;
+export const register = async (name, email, password) => {
+    return api.post('/register', { name, email, password });
+};
+
+export const login = async (email, password) => {
+    return api.post('/login', { email, password });
+};

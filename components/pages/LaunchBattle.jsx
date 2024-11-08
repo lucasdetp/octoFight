@@ -5,6 +5,7 @@ import { Card } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from '../atoms';  
+import { useTheme } from '../../providers/ThemeProvider';
 
 const LaunchBattle = ({ navigation, route }) => {
   const [rappers, setRappers] = useState([]);
@@ -12,11 +13,12 @@ const LaunchBattle = ({ navigation, route }) => {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('error');
   const scrollViewRef = useRef(null);
+  const { isNight } = useTheme();
 
   useEffect(() => {
     const fetchRappers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/rappers');
+        const response = await axios.get('https://286c-176-175-209-131.ngrok-free.app/api/rappers');
         setRappers(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des rappeurs:', error);
@@ -88,23 +90,33 @@ const LaunchBattle = ({ navigation, route }) => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
+        <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
       <StatusBar style="auto" />
       <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollViewContent}>
         <Text.MessageAlert message={message} type={messageType} /> 
         {rappers.map((rapper, index) => (
           index % 2 === 0 && (
             <View style={styles.row} key={index}>
-              <Card.CardRappeur rapper={rapper} onBuy={handleBuyRapper} /> 
+              <Card.CardRappeur
+                rapper={rapper}
+                onBuy={handleBuyRapper} 
+                backgroundColor={isNight ? '#333' : '#fff'}
+                textColor={isNight ? '#fff' : '#000'}
+              />
               {rappers[index + 1] && (
-                <Card.CardRappeur rapper={rappers[index + 1]} onBuy={handleBuyRapper} />  
+                <Card.CardRappeur
+                  rapper={rappers[index + 1]}
+                  onBuy={handleBuyRapper}
+                  backgroundColor={isNight ? '#333' : '#fff'}
+                  textColor={isNight ? '#fff' : '#000'}
+                />
               )}
             </View>
           )
