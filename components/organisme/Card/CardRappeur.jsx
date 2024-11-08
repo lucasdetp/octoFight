@@ -36,7 +36,7 @@ const CardRappeur = ({ rapper }) => {
     return (
         <Container.Card style={[styles.cardContainer, getCardStyle(rapper.rarity)]}>
             <ImageNameRappeur rapper={rapper} />
-            <Stats.StatsRappeur attack={rapper.attack} defense={rapper.defense} rarity={rapper.rarity} />
+            <Stats.StatsRappeur attack={rapper.attaque} defense={rapper.defense} rarity={rapper.rarity} />
         </Container.Card>
     );
 };
