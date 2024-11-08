@@ -3,10 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Card } from '../organisme';
 import axios from 'axios';
+import { useTheme } from '../../providers/ThemeProvider';
 
 const LaunchBattle = ({ navigation, route }) => {
   const [rappers, setRappers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isNight } = useTheme();
 
   useEffect(() => {
     const fetchRappers = async () => {
@@ -25,21 +27,31 @@ const LaunchBattle = ({ navigation, route }) => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
+        <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
       <StatusBar style="auto" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {rappers.map((rapper, index) => (
           index % 2 === 0 && (
             <View style={styles.row} key={index}>
-              <Card.CardRappeur rapper={rapper} />
-              {rappers[index + 1] && <Card.CardRappeur rapper={rappers[index + 1]} />}
+              <Card.CardRappeur
+                rapper={rapper}
+                backgroundColor={isNight ? '#333' : '#fff'}
+                textColor={isNight ? '#fff' : '#000'}
+              />
+              {rappers[index + 1] && (
+                <Card.CardRappeur
+                  rapper={rappers[index + 1]}
+                  backgroundColor={isNight ? '#333' : '#fff'}
+                  textColor={isNight ? '#fff' : '#000'}
+                />
+              )}
             </View>
           )
         ))}

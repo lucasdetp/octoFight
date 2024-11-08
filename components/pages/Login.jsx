@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import api from '../axiosConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -17,6 +18,11 @@ const Login = ({ navigation }) => {
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
                 setMessage('Login successful');
+
+                // Enregistrer le jeton dans AsyncStorage
+                await AsyncStorage.setItem('authToken', response.data.token);
+
+                // Naviguer vers la page Home après la connexion réussie
                 navigation.navigate('Home');
             }
         } catch (error) {

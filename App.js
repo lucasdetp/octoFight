@@ -5,19 +5,22 @@ import { createStackNavigator } from '@react-navigation/stack';
 import FooterNavBar from './components/molecules/FooterNavbar';
 import { LaunchBattle, Login, Register, Account } from './components/pages';
 import { Home } from './components/templates';
-import { NightThemeProvider } from './providers/NightThemeProvider';
-import NightSwitch from './components/atoms/NightSwitch';
+import { useColorScheme } from 'react-native';
+import { ThemeProvider } from './providers/ThemeProvider';
+
 
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const colorScheme = useColorScheme();
 
   return (
-    <NightThemeProvider>
+    <ThemeProvider>
 
       <NavigationContainer>
+
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
@@ -28,7 +31,8 @@ export default function App() {
 
         <FooterNavBar />
       </NavigationContainer>
-    </NightThemeProvider>
+    </ThemeProvider>
+
 
 
   );

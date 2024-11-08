@@ -1,24 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SafeAreaView, ScrollView, Text, View, StyleSheet } from 'react-native';
 import FooterNavBar from '../molecules/FooterNavbar';
 import { StatusBar } from 'expo-status-bar';
 import NightSwitch from '../atoms/NightSwitch';
-import { NightThemeProviderContext } from '../../providers/NightThemeProvider';
+import { useTheme } from '../../providers/ThemeProvider';
 
 const Home = () => {
-    const nightThemeContext = useContext(NightThemeProviderContext);
-    const { isNight, toggleNightMode } = nightThemeContext;
+    const { isNight } = useTheme();
+    const themeStyles = {
+        backgroundColor: isNight ? '#000000' : '#ffffff',
+        color: isNight ? '#ffffff' : '#000000',
+    };
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: isNight ? '#000' : '#fff' }]}>
-            <StatusBar style="auto" />
+        <SafeAreaView style={[styles.container, { backgroundColor: themeStyles.backgroundColor }]}>
+            <StatusBar style={isNight ? 'light' : 'dark'} />
             <View style={styles.header}>
-                <NightSwitch onPress={toggleNightMode} isNight={isNight} />
+                <NightSwitch />
             </View>
-            <ScrollView>
-                <Text style={[styles.text, { color: isNight ? '#fff' : '#000' }]}>
-                    Testtt
-                </Text>
+            <ScrollView contentContainerStyle={{ padding: 16 }}>
+                <Text style={[styles.text, { color: themeStyles.color }]}>Bienvenue sur l'accueil !</Text>
             </ScrollView>
             <FooterNavBar />
         </SafeAreaView>
