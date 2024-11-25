@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
-import Button from '../../components/atoms/Button/Button';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTheme } from '../../providers/ThemeProvider';
 import api from '../axiosConfig';
 
 const Register = ({ navigation }) => {
@@ -8,10 +8,12 @@ const Register = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const { isNight } = useTheme();
 
     const handleRegister = async () => {
         if (password !== confirmPassword) {
-            Alert.alert('Erreur', 'Le mot de passe et la confirmation ne correspondent pas.');
+            setMessage('Passwords do not match');
             return;
         }
 
@@ -25,56 +27,54 @@ const Register = ({ navigation }) => {
 
             if (response.status === 201) {
                 console.log('Registration successful:', response.data);
-                Alert.alert('Succès', 'Inscription réussie');
+                setMessage('Registration successful');
                 navigation.navigate('Login');
             }
         } catch (error) {
-            if (error.response) {
-                console.error('Response error:', error.response.data);
-                Alert.alert('Erreur', error.response.data.message);
-            } else {
-                console.error('Registration error:', error.message);
-                Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
-            }
+            console.error('Registration error:', error.response ? error.response.data : error.message);
+            setMessage('Failed to register. Please try again.');
         }
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Register</Text>
+        <View style={[styles.container, { backgroundColor: isNight ? '#000' : '#fff' }]}>
+            <Text style={[styles.title, { color: isNight ? '#fff' : '#000' }]}>Register</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Name"
                 value={name}
                 onChangeText={setName}
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
-            <Button title="Register" onClick={handleRegister} />
-            <Text style={styles.loginText} onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: isNight ? '#444' : '#007BFF' }]} onPress={handleRegister}>
+                <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
+            {message ? <Text style={[styles.message, { color: isNight ? 'red' : 'red' }]}>{message}</Text> : null}
+            <Text style={[styles.loginText, { color: isNight ? '#1E90FF' : '#007BFF' }]} onPress={() => navigation.navigate('Login')}>
                 Already have an account? Login
             </Text>
         </View>
@@ -101,9 +101,24 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 8,
     },
+    button: {
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    message: {
+        marginTop: 15,
+        fontSize: 16,
+    },
     loginText: {
         marginTop: 15,
-        color: '#007BFF',
     },
 });
 

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTheme } from '../../providers/ThemeProvider';
 import api from '../axiosConfig';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const { isNight } = useTheme();
 
     const handleLogin = async () => {
         try {
@@ -18,9 +19,6 @@ const Login = ({ navigation }) => {
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
                 setMessage('Login successful');
-
-                await AsyncStorage.setItem('authToken', response.data.token);
-
                 navigation.navigate('Home');
             }
         } catch (error) {
@@ -30,29 +28,29 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
+        <View style={[styles.container, { backgroundColor: isNight ? '#000' : '#fff' }]}>
+            <Text style={[styles.title, { color: isNight ? '#fff' : '#000' }]}>Login</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isNight ? '#333' : '#fff', color: isNight ? '#fff' : '#000' }]}
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
-                placeholderTextColor="#999"
+                placeholderTextColor={isNight ? '#aaa' : '#999'}
             />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: isNight ? '#444' : '#007BFF' }]} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-            {message ? <Text style={styles.message}>{message}</Text> : null}
-            <Text style={styles.registerText} onPress={() => navigation.navigate('Register')}>
+            {message ? <Text style={[styles.message, { color: isNight ? 'red' : 'red' }]}>{message}</Text> : null}
+            <Text style={[styles.registerText, { color: isNight ? '#1E90FF' : '#007BFF' }]} onPress={() => navigation.navigate('Register')}>
                 Don't have an account? Register
             </Text>
         </View>
@@ -80,7 +78,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     button: {
-        backgroundColor: '#007BFF',
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 8,
@@ -95,11 +92,9 @@ const styles = StyleSheet.create({
     message: {
         marginTop: 15,
         fontSize: 16,
-        color: 'red',
     },
     registerText: {
         marginTop: 15,
-        color: '#007BFF',
     },
 });
 
