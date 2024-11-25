@@ -16,7 +16,7 @@ const Register = ({ navigation }) => {
         }
 
         try {
-            const response = await api.post('https://286c-176-175-209-131.ngrok-free.app/api/register', {
+            const response = await api.post('http://10.26.132.231:8000/api/register', {
                 name,
                 email,
                 password,

@@ -10,7 +10,7 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await api.post('https://286c-176-175-209-131.ngrok-free.app/api/login', {
+            const response = await api.post('http://10.26.132.231:8000/api/login', {
                 email,
                 password,
             });
@@ -20,10 +20,10 @@ const Login = ({ navigation }) => {
                 await AsyncStorage.setItem('token', response.data.token);
                 setMessage('Login successful');
 
-                // Enregistrer le jeton dans AsyncStorage
                 await AsyncStorage.setItem('authToken', response.data.token);
+                await AsyncStorage.setItem('id', response.data.user.id.toString()); 
 
-                // Naviguer vers la page Home après la connexion réussie
+
                 navigation.navigate('Home');
             }
         } catch (error) {
