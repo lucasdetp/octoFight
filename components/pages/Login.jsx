@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import api from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as pJson from '../../package.json';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     const handleLogin = async () => {
         try {
 
-            const response = await api.post('http://10.26.130.75:8000/api/login', {
+            const response = await api.post(`${pJson.proxy}/api/login`, {
 
                 email,
                 password,
@@ -20,17 +23,22 @@ const Login = ({ navigation }) => {
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
                 await AsyncStorage.setItem('token', response.data.token);
-                setMessage('Login successful');
-
                 await AsyncStorage.setItem('authToken', response.data.token);
-                await AsyncStorage.setItem('id', response.data.user.id.toString()); 
+                await AsyncStorage.setItem('id', response.data.user.id.toString());
 
-
+                setIsLoggedIn(true);
+                setMessage('Login successful');
                 navigation.navigate('Home');
             }
         } catch (error) {
             console.error('Login error:', error.response ? error.response.data : error.message);
             setMessage('Failed to login. Please check your credentials.');
+
+            if (error.response && error.response.data && error.response.data.message) {
+                setMessage(error.response.data.message);
+            }
+        } finally {
+            setLoading(false);
         }
     };
 

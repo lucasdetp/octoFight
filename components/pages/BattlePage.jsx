@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useSocket } from '../../providers/SocketContext';
+import * as pJson from '../../package.json';
 
 const BattlePage = ({ route }) => {
   const { battleId, userId } = route.params || {};
@@ -17,7 +18,7 @@ const BattlePage = ({ route }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       const token = await AsyncStorage.getItem('token');
-      const response = await axios.get(`http://10.26.132.231:8000/api/user/${userId}/rappers`, {
+      const response = await axios.get(`${pJson.proxy}/api/user/${userId}/rappers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRappers(response.data.rappers);
@@ -38,31 +39,55 @@ const BattlePage = ({ route }) => {
     }
   }, []);
 
+
+  useEffect(() => {
+    if (socket && battleId) {
+      socket.on(`battle.${battleId}`, (data) => {
+        console.log('Mise à jour de la bataille:', data);
+
+        if (data.message.includes('Sélectionnez vos rappeurs')) {
+          if (data.battle.user1_id === userId && !data.battle.user1_rapper_id) {
+            navigation.navigate('ChooseRapperPage', { battleId, userId });
+          }
+
+          if (data.battle.user2_id === userId && !data.battle.user2_rapper_id) {
+            navigation.navigate('ChooseRapperPage', { battleId, userId });
+          }
+        }
+      });
+
+      return () => {
+        socket.off(`battle.${battleId}`);
+      };
+    }
+  }, [socket, battleId]);
+
   const handleSelectRapper = async (rapperId) => {
     console.log('userIdhere :', userId);
     
     try {
-        await axios.post(
-            `http://10.26.132.231:8000/api/battle/${battleId}/choose-rapper`,
-            { rapper_id: rapperId },
-            { headers: { Authorization: `Bearer ${await AsyncStorage.getItem('token')}` } }
-        );
-        // socket.emit('rapperChosen', { battleId, userId, rapperId });
+      await axios.post(
+        `${pJson.proxy}/api/battle/${battleId}/choose-rapper`,
+        { rapper_id: rapperId },
+        { headers: { Authorization: `Bearer ${await AsyncStorage.getItem('token')}` } }
+      );
 
-        Alert.alert('Succès', 'Rappeur choisi avec succès !');
-        navigation.navigate('Home');
+      socket.emit('rapperChosen', { battleId, userId, rapperId });
+
+      Alert.alert('Succès', 'Rappeur choisi avec succès !');
+      navigation.goBack();
     } catch (error) {
-        console.error('Erreur lors de la sélection du rappeur:', error);
-        Alert.alert('Erreur', 'Impossible de sélectionner ce rappeur.');
+      console.error('Erreur lors de la sélection du rappeur:', error);
+      Alert.alert('Erreur', 'Impossible de sélectionner ce rappeur.');
     }
-};
+  };
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sélectionnez votre rappeur</Text>
-      <Picker 
-        selectedValue={selectedRapper} 
+      <Picker
+        selectedValue={selectedRapper}
         onValueChange={(value) => {
           setSelectedRapper(value);
           handleSelectRapper(value);
