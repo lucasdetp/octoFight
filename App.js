@@ -12,6 +12,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import { SocketProvider } from './providers/SocketContext'; 
 import CheckBattle from './providers/CheckBattle';
+import OfflineNotice from './components/OfflineNotice';
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,7 @@ console.log('userId:', userId);
     <SocketProvider>
         <ThemeProvider>
           <NavigationContainer>
+            <OfflineNotice />
             <CheckBattle userId={userId} refreshKey={refreshKey}>
               <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Login" component={Login} />
