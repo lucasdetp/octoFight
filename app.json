@@ -3,6 +3,13 @@
     "name": "octoFight",
     "slug": "octoFight",
     "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "jsEngine": "hermes",
+    "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

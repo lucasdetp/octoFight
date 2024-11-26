@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Button from '../../components/atoms/Button/Button'; // Assurez-vous du bon chemin d'import
 import api from '../api';
+import * as pJson from '../../package.json';
 
 const Register = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -16,7 +17,7 @@ const Register = ({ navigation }) => {
         }
 
         try {
-            const response = await api.post('http://10.26.132.231:8000/api/register', {
+            const response = await api.post(`${pJson.proxy}/api/register`, {
                 name,
                 email,
                 password,
