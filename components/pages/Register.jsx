@@ -16,11 +16,13 @@ const Register = ({ navigation }) => {
         }
 
         try {
-            const response = await api.post('http://10.26.132.231:8000/api/register', {
+
+            const response = await api.post('https://10.26.130.75:8000/api/register', {
+
                 name,
                 email,
                 password,
-                password_confirmation: confirmPassword, // Ajout du champ password_confirmation
+                password_confirmation: confirmPassword,
             });
 
             if (response.status === 201) {

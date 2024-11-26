@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FooterNavBar from './components/molecules/FooterNavbar';
-import { LaunchBattle, Login, Register, Account, BattlePage } from './components/pages';
+import { LaunchBattle, Login, Register, Account, BattlePage, Deck } from './components/pages';
 import { Home } from './components/templates';
 import { useColorScheme } from 'react-native';
 import { ThemeProvider } from './providers/ThemeProvider';
@@ -22,7 +22,7 @@ export default function App() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [battleId, setBattleId] = useState(null);
   const [socket, setSocket] = useState(null);
-
+  
   const getUserIdFromStorage = async () => {
     const userToken = await AsyncStorage.getItem('token');
     if (userToken) {
@@ -34,7 +34,6 @@ export default function App() {
       setUserId(response.data.id);
     }
   };
-
   useEffect(() => {
     getUserIdFromStorage();
     
@@ -58,6 +57,7 @@ console.log('userId:', userId);
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
                 <Stack.Screen name="Account" component={Account} />
+                <Stack.Screen name="Deck" component={Deck} />
                   <Stack.Screen name="BattlePage">
                     {props => 
                       <BattlePage 

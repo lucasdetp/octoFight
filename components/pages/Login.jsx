@@ -10,7 +10,9 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await api.post('http://10.26.132.231:8000/api/login', {
+
+            const response = await api.post('http://10.26.130.75:8000/api/login', {
+
                 email,
                 password,
             });

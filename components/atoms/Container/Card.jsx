@@ -7,7 +7,6 @@ const Card = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     card: {
-        // backgroundColor: '#FFFFFF',
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
