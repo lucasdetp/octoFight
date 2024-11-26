@@ -29,7 +29,6 @@ const Home = () => {
     const [userInfo, setUserInfo] = useState(null);
     const openInviteModal = () => setModalVisible(true);
     const closeInviteModal = () => setModalVisible(false);
-
     const battleId = 1;
     const echo = new Echo({
         broadcaster: 'pusher',

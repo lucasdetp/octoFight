@@ -18,10 +18,11 @@ const Register = ({ navigation }) => {
 
         try {
             const response = await api.post(`${pJson.proxy}/api/register`, {
+
                 name,
                 email,
                 password,
-                password_confirmation: confirmPassword, // Ajout du champ password_confirmation
+                password_confirmation: confirmPassword,
             });
 
             if (response.status === 201) {

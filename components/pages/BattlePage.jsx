@@ -3,20 +3,19 @@ import { View, Text, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 import { useSocket } from '../../providers/SocketContext';
 import * as pJson from '../../package.json';
 
-const BattlePage = ({ route, navigation }) => {
+const BattlePage = ({ route }) => {
   const { battleId, userId } = route.params || {};
   const { socket } = useSocket();
   const [rappers, setRappers] = useState([]);
   const [selectedRapper, setSelectedRapper] = useState(null);
   const [opponentRapper, setOpponentRapper] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
-    console.log('battleId passé à BattlePage:', battleId);
-    console.log('userId passé à BattlePage:', userId);
-
     const fetchRappers = async () => {
       const token = await AsyncStorage.getItem('token');
       const response = await axios.get(`${pJson.proxy}/api/user/${userId}/rappers`, {
@@ -39,6 +38,7 @@ const BattlePage = ({ route, navigation }) => {
       console.error('Socket is not defined');
     }
   }, []);
+
 
   useEffect(() => {
     if (socket && battleId) {
@@ -63,6 +63,8 @@ const BattlePage = ({ route, navigation }) => {
   }, [socket, battleId]);
 
   const handleSelectRapper = async (rapperId) => {
+    console.log('userIdhere :', userId);
+    
     try {
       await axios.post(
         `${pJson.proxy}/api/battle/${battleId}/choose-rapper`,

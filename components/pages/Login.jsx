@@ -13,7 +13,9 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
+
             const response = await api.post(`${pJson.proxy}/api/login`, {
+
                 email,
                 password,
             });

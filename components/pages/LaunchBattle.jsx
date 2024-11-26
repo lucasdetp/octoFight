@@ -4,6 +4,7 @@ import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator } from 'r
 import { Card } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Text } from '../atoms';
 import { useTheme } from '../../providers/ThemeProvider';
 import * as pJson from '../../package.json';
 import { UserContext } from '../../providers/UserContext';
@@ -11,7 +12,7 @@ import { FooterNavBar } from '../molecules';
 import { handleBuyRapper } from '../atoms/Function';
 import { Text } from '../atoms';
 
-const LaunchBattle = ({ navigation, route }) => {
+const LaunchBattle = ({ navigation, route, onRapperBought }) => {
   const [rappers, setRappers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -23,6 +24,7 @@ const LaunchBattle = ({ navigation, route }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       try {
+
         const response = await axios.get(`${pJson.proxy}/api/rappers`);
         setRappers(response.data);
       } catch (error) {
@@ -65,6 +67,7 @@ const LaunchBattle = ({ navigation, route }) => {
         ref={scrollViewRef}
         contentContainerStyle={[styles.scrollViewContent, { marginTop: 70 }]}
       >
+
         <Text.MessageAlert message={message} type={messageType} />
         {rappers.map((rapper, index) => (
           index % 2 === 0 && (
