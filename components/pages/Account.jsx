@@ -100,7 +100,7 @@ const Account = ({ navigation }) => {
     if (loading) {
         return (
             <View style={[styles.container, { backgroundColor: isNight ? '#000' : '#fff' }]}>
-                <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
+                <ActivityIndicator size="100" color={isNight ? '#ffffff' : '#0000ff'} />
             </View>
         );
     }

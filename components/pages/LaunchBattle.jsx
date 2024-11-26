@@ -18,6 +18,7 @@ const LaunchBattle = ({ navigation, route, onRapperBought }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       try {
+
         const response = await axios.get('http://10.26.130.75:8000/api/rappers');
         setRappers(response.data);
       } catch (error) {
@@ -97,7 +98,7 @@ const LaunchBattle = ({ navigation, route, onRapperBought }) => {
   if (loading) {
     return (
       <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
-        <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
+        <ActivityIndicator size="100" color={isNight ? '#ffffff' : '#0000ff'} />
       </SafeAreaView>
     );
   }

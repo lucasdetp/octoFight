@@ -16,7 +16,9 @@ const Register = ({ navigation }) => {
         }
 
         try {
+
             const response = await api.post('https://10.26.130.75:8000/api/register', {
+
                 name,
                 email,
                 password,
