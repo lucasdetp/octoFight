@@ -11,12 +11,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import { SocketProvider } from './providers/SocketContext'; 
+import CheckBattle from './providers/CheckBattle';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const colorScheme = useColorScheme();
   const [userId, setUserId] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [battleId, setBattleId] = useState(null);
   const [socket, setSocket] = useState(null);
 
@@ -42,29 +44,31 @@ export default function App() {
       socketInstance.disconnect(); 
     };
   }, []);
-
+console.log('userId:', userId);
   return (
     <SocketProvider>
-      <ThemeProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
-            <Stack.Screen name="Account" component={Account} />
-              <Stack.Screen name="BattlePage">
-                {props => 
-                  <BattlePage 
-                    {...props} userId={userId} socket={socket} 
-                    battleId={battleId} setBattleId={setBattleId} 
-                  />}
-              </Stack.Screen>
-          </Stack.Navigator>
-          <FooterNavBar />
-        </NavigationContainer>
-      </ThemeProvider>
-    </SocketProvider>
+        <ThemeProvider>
+          <NavigationContainer>
+            <CheckBattle userId={userId} refreshKey={refreshKey}>
+              <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+                <Stack.Screen name="Account" component={Account} />
+                  <Stack.Screen name="BattlePage">
+                    {props => 
+                      <BattlePage 
+                        {...props} userId={userId} socket={socket} 
+                        battleId={battleId} setBattleId={setBattleId} 
+                      />}
+                  </Stack.Screen>
+              </Stack.Navigator>
+              <FooterNavBar />
+            </CheckBattle>
+          </NavigationContainer>
+        </ThemeProvider>
+      </SocketProvider>
   );
 }
 

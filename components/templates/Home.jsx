@@ -29,7 +29,7 @@ const Home = () => {
 
     const openInviteModal = () => setModalVisible(true);
     const closeInviteModal = () => setModalVisible(false);
-const battleId = 1;
+const battleId = 1; // TODO enelver battleID en dur
     const echo = new Echo({
         broadcaster: 'pusher',
         key: '225d6e015dff0ed8b4f6',
