@@ -10,7 +10,7 @@ const Login = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await api.post('https://286c-176-175-209-131.ngrok-free.app/api/login', {
+            const response = await api.post('http://10.26.130.75:8000/api/login', {
                 email,
                 password,
             });

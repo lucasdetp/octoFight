@@ -4,10 +4,10 @@ import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator } from 'r
 import { Card } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text } from '../atoms';  
+import { Text } from '../atoms';
 import { useTheme } from '../../providers/ThemeProvider';
 
-const LaunchBattle = ({ navigation, route }) => {
+const LaunchBattle = ({ navigation, route, onRapperBought }) => {
   const [rappers, setRappers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -18,7 +18,7 @@ const LaunchBattle = ({ navigation, route }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       try {
-        const response = await axios.get('https://286c-176-175-209-131.ngrok-free.app/api/rappers');
+        const response = await axios.get('http://10.26.130.75:8000/api/rappers');
         setRappers(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des rappeurs:', error);
@@ -45,42 +45,48 @@ const LaunchBattle = ({ navigation, route }) => {
   const handleBuyRapper = async (rapperId) => {
     try {
       const token = await getToken();
-  
+
       if (!token) {
         setMessage('Vous devez être connecté pour acheter un rappeur.');
         setMessageType('error');
         return;
       }
-  
+
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-  
+
       const response = await axios.post(
-        'https://286c-176-175-209-131.ngrok-free.app/api/buy-rapper',
+        'http://10.26.130.75:8000/api/buy-rapper',
         { rapper_id: String(rapperId) },
         config
       );
-  
+
       if (response.status === 200) {
         setMessage('Vous avez acheté ce rappeur !');
         setMessageType('success');
         setRappers((prevRappers) =>
           prevRappers.filter((rapper) => rapper.id !== rapperId)
         );
+
+        // Appel de la fonction pour mettre à jour le deck
+        if (onRapperBought) {
+          onRapperBought();
+        }
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        setMessage(error.response.data.error); 
+        setMessage(error.response.data.error);
       } else {
-        setMessage("Une erreur est survenue lors de l'achat du rappeur."); 
+        setMessage("Une erreur est survenue lors de l'achat du rappeur.");
       }
       setMessageType('error');
     }
   };
-  
+
+
 
   useEffect(() => {
     if (message) {
@@ -100,13 +106,13 @@ const LaunchBattle = ({ navigation, route }) => {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
       <StatusBar style="auto" />
       <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollViewContent}>
-        <Text.MessageAlert message={message} type={messageType} /> 
+        <Text.MessageAlert message={message} type={messageType} />
         {rappers.map((rapper, index) => (
           index % 2 === 0 && (
             <View style={styles.row} key={index}>
               <Card.CardRappeur
                 rapper={rapper}
-                onBuy={handleBuyRapper} 
+                onBuy={handleBuyRapper}
                 backgroundColor={isNight ? '#333' : '#fff'}
                 textColor={isNight ? '#fff' : '#000'}
               />

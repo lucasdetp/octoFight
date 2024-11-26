@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FooterNavBar from './components/molecules/FooterNavbar';
-import { LaunchBattle, Login, Register, Account } from './components/pages';
+import { LaunchBattle, Login, Register, Account, Deck } from './components/pages';
 import { Home } from './components/templates';
 import { useColorScheme } from 'react-native';
 import { ThemeProvider } from './providers/ThemeProvider';
@@ -27,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
           <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="Deck" component={Deck} />
         </Stack.Navigator>
 
         <FooterNavBar />
