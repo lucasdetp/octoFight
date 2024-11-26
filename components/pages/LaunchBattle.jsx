@@ -18,7 +18,7 @@ const LaunchBattle = ({ navigation, route }) => {
   useEffect(() => {
     const fetchRappers = async () => {
       try {
-        const response = await axios.get('https://286c-176-175-209-131.ngrok-free.app/api/rappers');
+        const response = await axios.get('http://10.26.132.231:8000/api/rappers');
         setRappers(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des rappeurs:', error);
@@ -59,7 +59,7 @@ const LaunchBattle = ({ navigation, route }) => {
       };
   
       const response = await axios.post(
-        'https://286c-176-175-209-131.ngrok-free.app/api/buy-rapper',
+        'http://10.26.132.231:8000/api/buy-rapper',
         { rapper_id: String(rapperId) },
         config
       );
@@ -91,7 +91,7 @@ const LaunchBattle = ({ navigation, route }) => {
   if (loading) {
     return (
       <SafeAreaView style={[styles.safeArea, { backgroundColor: isNight ? '#000' : '#fff' }]}>
-        <ActivityIndicator size="large" color={isNight ? '#ffffff' : '#0000ff'} />
+        <ActivityIndicator size="100" color={isNight ? '#ffffff' : '#0000ff'} />
       </SafeAreaView>
     );
   }
