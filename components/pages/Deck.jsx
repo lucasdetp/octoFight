@@ -32,7 +32,16 @@ const Deck = ({ navigation }) => {
                 },
             });
 
-            setRappers(response.data);
+            // Tri des rappeurs par rareté (légendaire, épique, rare, commun)
+            const rarityOrder = {
+                'légendaire': 1,
+                'épique': 2,
+                'rare': 3,
+                'commun': 4,
+            };
+            const sortedRappers = response.data.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
+
+            setRappers(sortedRappers);
         } catch (error) {
             console.error('Erreur lors de la récupération du deck:', error);
             setMessage('Erreur lors de la récupération du deck.');
@@ -42,12 +51,10 @@ const Deck = ({ navigation }) => {
         }
     };
 
-    // Utiliser useEffect pour appeler fetchDeck une seule fois lors du montage
     useEffect(() => {
         fetchDeck();
     }, []);
 
-    // Scroller en haut si un message est défini
     useEffect(() => {
         if (message) {
             scrollViewRef.current?.scrollTo({ y: 0, animated: true });
@@ -72,10 +79,10 @@ const Deck = ({ navigation }) => {
                         <View style={styles.row} key={index}>
                             <Card.CardRappeur
                                 rapper={rapper}
-                                onBuy={null} // En passant `null`, le bouton ne s'affichera pas
+                                onBuy={null}
                                 backgroundColor={isNight ? '#333' : '#fff'}
                                 textColor={isNight ? '#fff' : '#000'}
-                                hideBuyButton={true} // Ajout de la propriété `hideBuyButton`
+                                hideBuyButton={true}
                             />
                             {rappers[index + 1] && (
                                 <Card.CardRappeur
@@ -83,7 +90,7 @@ const Deck = ({ navigation }) => {
                                     onBuy={null}
                                     backgroundColor={isNight ? '#333' : '#fff'}
                                     textColor={isNight ? '#fff' : '#000'}
-                                    hideBuyButton={true} // Ajout de la propriété `hideBuyButton`
+                                    hideBuyButton={true}
                                 />
                             )}
                         </View>
