@@ -12,7 +12,6 @@ import { SocketProvider } from './providers/SocketContext';
 import { View, Text, StyleSheet } from 'react-native';
 import { io } from 'socket.io-client';
 import axios from 'axios';
-import { SocketProvider } from './providers/SocketContext'; 
 import CheckBattle from './providers/CheckBattle';
 import OfflineNotice from './components/OfflineNotice';
 
@@ -37,7 +36,7 @@ const AppNavigator = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [battleId, setBattleId] = useState(null);
   const [socket, setSocket] = useState(null);
-  
+
   const getUserIdFromStorage = async () => {
     const userToken = await AsyncStorage.getItem('token');
     if (userToken) {
@@ -57,32 +56,30 @@ const AppNavigator = () => {
       socketInstance.disconnect();
     };
   }, []);
-console.log('userId:', userId);
+  console.log('userId:', userId);
   return (
 
     <SocketProvider>
-        <ThemeProvider>
-          <NavigationContainer>
-            <OfflineNotice />
-            <CheckBattle userId={userId} refreshKey={refreshKey}>
-              <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
-                <Stack.Screen name="Account" component={Account} />
-                <Stack.Screen name="Deck" component={Deck} />
-                <Stack.Screen name="BattlePage">
-                  {props =>
-                    <BattlePage
-                      {...props} userId={userId} socket={socket} userInfo={userInfo}
-                    />}
-                </Stack.Screen>
-              </Stack.Navigator>
-            </CheckBattle>
-          </NavigationContainer>
-        </ThemeProvider>
-      </SocketProvider>
+      <ThemeProvider>
+        <OfflineNotice />
+        <CheckBattle userId={userId} refreshKey={refreshKey}>
+          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+            <Stack.Screen name="Account" component={Account} />
+            <Stack.Screen name="Deck" component={Deck} />
+            <Stack.Screen name="BattlePage">
+              {props =>
+                <BattlePage
+                  {...props} userId={userId} socket={socket} userInfo={userInfo}
+                />}
+            </Stack.Screen>
+          </Stack.Navigator>
+        </CheckBattle>
+      </ThemeProvider>
+    </SocketProvider>
 
   );
 };

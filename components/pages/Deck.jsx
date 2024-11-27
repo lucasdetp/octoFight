@@ -26,7 +26,7 @@ const Deck = ({ navigation }) => {
                 return;
             }
 
-            const response = await axios.get('http://10.26.130.75:8000/api/user/deck', {
+            const response = await axios.get(`${pJson.proxy}/api/user/deck`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

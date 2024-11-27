@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSocket } from '../providers/SocketContext';
+import * as pJson from '../package.json';
 
 const CheckBattle = ({ children, userId }) => {
     const [isBattle, setIsBattle] = useState(false);
@@ -24,7 +25,7 @@ const CheckBattle = ({ children, userId }) => {
                     setIsBattle(lastBattleStatus);
                     return;
                 }
-                
+
                 if (!userId) {
                     setIsBattle(false);
                     return;
@@ -34,9 +35,9 @@ const CheckBattle = ({ children, userId }) => {
                     console.error('Navigation not initialized');
                     return null;
                 }
-                
+
                 const token = await AsyncStorage.getItem('token');
-                const url = `http://10.26.132.231:8000/api/user/${userId}/battle`;
+                // const url = `${pJson.proxy}/api/user/${userId}/battle`;
 
                 const response = await axios.get(url, {
                     headers: {

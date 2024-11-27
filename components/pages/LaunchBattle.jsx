@@ -10,7 +10,6 @@ import * as pJson from '../../package.json';
 import { UserContext } from '../../providers/UserContext';
 import { FooterNavBar } from '../molecules';
 import { handleBuyRapper } from '../atoms/Function';
-import { Text } from '../atoms';
 
 const LaunchBattle = ({ navigation, route, onRapperBought }) => {
   const [rappers, setRappers] = useState([]);
