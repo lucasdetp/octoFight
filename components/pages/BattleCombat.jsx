@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { resolveBattle } from '../axiosConfig';
+import { Text, Button } from '../atoms';
 
 const BattleCombat = ({ route }) => {
     const { battleId } = route.params;
@@ -22,19 +23,19 @@ const BattleCombat = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Choisissez votre rappeur pour le combat</Text>
+            <Text.Name style={styles.header}>Choisissez votre rappeur pour le combat</Text.Name>
             <FlatList
                 data={rappers}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <Button
+                    <Button.Button
                         title={`Choisir ${item.name}`}
                         onPress={() => setSelectedRapper(item)}
                         color={selectedRapper?.id === item.id ? 'green' : 'blue'}
                     />
                 )}
             />
-            <Button title="Lancer le combat" onPress={handleBattle} />
+            <Button.Base title="Lancer le combat" onPress={handleBattle} />
         </View>
     );
 };

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import api from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as pJson from '../../package.json';
+import { Button, Text } from '../atoms';
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -44,8 +45,8 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
-            <TextInput
+            <Text.Name style={styles.title}>Se connecter</Text.Name>
+            <Text.BasicTextInput
                 style={styles.input}
                 placeholder="Email"
                 value={email}
@@ -53,21 +54,22 @@ const Login = ({ navigation }) => {
                 keyboardType="email-address"
                 placeholderTextColor="#999"
             />
-            <TextInput
+            <Text.BasicTextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Mot de passe"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            {message ? <Text style={styles.message}>{message}</Text> : null}
-            <Text style={styles.registerText} onPress={() => navigation.navigate('Register')}>
-                Don't have an account? Register
-            </Text>
+            <Button.CustomButton 
+                title="Se connecter" 
+                onPress={handleLogin} 
+                buttonStyle={styles.customButton} 
+                textStyle={styles.customText} 
+            />
+            {message ? <Text.Name style={styles.message}>{message}</Text.Name> : null}
+            <Text.RedirectLink text="Vous n'avez pas de compte? Inscrivez-vous" onPress={() => navigation.navigate('Register')} />
         </View>
     );
 };

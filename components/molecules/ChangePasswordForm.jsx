@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import Button from '../atoms/Button/Button';
+import { View, StyleSheet } from 'react-native';
+import { Button, Container, Text } from '../atoms';
 
 const ChangePasswordForm = ({ onSubmit }) => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -16,9 +16,9 @@ const ChangePasswordForm = ({ onSubmit }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Current Password</Text>
-            <TextInput
+        <Container.BasicView style={styles.container}>
+            <Text.Name style={styles.label}>Current Password</Text.Name>
+            <Text.BasicTextInput
                 style={styles.input}
                 placeholder="Enter current password"
                 value={currentPassword}
@@ -26,8 +26,8 @@ const ChangePasswordForm = ({ onSubmit }) => {
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <Text style={styles.label}>New Password</Text>
-            <TextInput
+            <Text.Name style={styles.label}>New Password</Text.Name>
+            <Text.BasicTextInput
                 style={styles.input}
                 placeholder="Enter new password"
                 value={newPassword}
@@ -35,8 +35,8 @@ const ChangePasswordForm = ({ onSubmit }) => {
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <Text style={styles.label}>Confirm New Password</Text>
-            <TextInput
+            <Text.Name style={styles.label}>Confirm New Password</Text.Name>
+            <Text.BasicTextInput
                 style={styles.input}
                 placeholder="Confirm new password"
                 value={confirmPassword}
@@ -44,8 +44,8 @@ const ChangePasswordForm = ({ onSubmit }) => {
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <Button title="Change Password" onClick={handleSubmit} />
-        </View>
+            <Button.Button title="Change Password" onClick={handleSubmit} />
+        </Container.BasicView>
     );
 };
 
