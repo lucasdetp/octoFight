@@ -1,10 +1,12 @@
 import axios from 'axios';
+import * as pJson from '../package.json';
 
 const api = axios.create({
-    baseURL: 'http://10.26.130.75:8000/api',
+    baseURL: `${pJson.proxy}/api`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export default api;
+
