@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, View, StyleSheet, Alert } from 'react-native'
 import FooterNavBar from '../molecules/FooterNavbar';
 import { StatusBar } from 'expo-status-bar';
 import NightSwitch from '../atoms/Function/NightSwitch';
-import { useTheme } from '../../providers/ThemeProvider';
+import { useTheme } from '../../providers/OctoThemeProvider';
 import { InviteModal } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
