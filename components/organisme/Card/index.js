@@ -1,3 +1,4 @@
 import CardRappeur from "./CardRappeur";
+import CardMyRappeur from "./CardMyRappeur";
 
-export { CardRappeur };
+export { CardRappeur, CardMyRappeur };

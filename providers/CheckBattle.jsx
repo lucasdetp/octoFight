@@ -37,7 +37,7 @@ const CheckBattle = ({ children, userId }) => {
                 }
 
                 const token = await AsyncStorage.getItem('token');
-                // const url = `${pJson.proxy}/api/user/${userId}/battle`;
+                const url = `${pJson.proxy}/api/user/${userId}/battle`;
 
                 const response = await axios.get(url, {
                     headers: {

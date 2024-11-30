@@ -2,12 +2,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Container, Text } from '../../atoms';
 
-const StatsRappeur = ({ attack, defense, rarity }) => {
+const StatsRappeur = ({ attack = 0, defense = 0, rarity = 'commun' }) => {
     return (
         <Container.Text style={styles.statsContainer}>
             <Text.State label="Attaque :" value={attack} />
             <Text.State label="Défense :" value={defense} />
-            <Text.Rarity rarity={rarity} />
         </Container.Text>
     );
 };

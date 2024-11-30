@@ -10,6 +10,13 @@ export const UserProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
+    const updateCredits = (newCredits) => {
+        setUserInfo((prev) => ({
+            ...prev,
+            credit: newCredits,
+        }));
+    };
+
     const getUserInfo = async () => {
         try {
             const userToken = await AsyncStorage.getItem('token');

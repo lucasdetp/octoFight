@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { Container } from '../../atoms';
 import { ImageNameRappeur, Stats } from '../../molecules';
 
-
-const CardRappeur = ({ rapper, onBuy, hideBuyButton, price }) => {
+const CardMyRappeur = ({ rapper }) => {
     const getCardStyle = (rarity) => {
         switch (rarity) {
             case 'légendaire':
@@ -17,6 +16,7 @@ const CardRappeur = ({ rapper, onBuy, hideBuyButton, price }) => {
                 return {
                     backgroundColor: '#9400D3',
                     borderColor: '#000000',
+                    color: '#fff',
                     borderWidth: 3,
                 };
             case 'rare':
@@ -33,6 +33,7 @@ const CardRappeur = ({ rapper, onBuy, hideBuyButton, price }) => {
                 };
         }
     };
+
 
     const getRarityStyle = (rarity) => {
         switch (rarity) {
@@ -67,21 +68,16 @@ const CardRappeur = ({ rapper, onBuy, hideBuyButton, price }) => {
         }
     };
 
+
     const rarity = rapper?.rarity || 'commun';
+    const attaque = rapper?.attaque || 0;
+    const defense = rapper?.defense || 0;
 
     return (
-        <Container.Card style={[styles.cardContainer, getCardStyle(rapper.rarity)]}>
+        <Container.Card style={[styles.cardContainer, getCardStyle(rarity)]}>
             <Text style={[styles.rarityBadge, getRarityStyle(rarity)]}>{rarity}</Text>
             <ImageNameRappeur rapper={rapper} />
-            <Stats.StatsRappeur attack={rapper.attaque} defense={rapper.defense} />
-
-            <Text style={styles.priceText}>{`Prix : ${price} C`}</Text>
-
-            {!hideBuyButton && (
-                <TouchableOpacity style={styles.buyButton} onPress={() => onBuy(rapper.id)}>
-                    <Text style={styles.buyButtonText}>Acheter</Text>
-                </TouchableOpacity>
-            )}
+            <Stats.StatsRappeur style={[styles.stats]} attack={attaque} defense={defense} />
         </Container.Card>
     );
 };
@@ -94,7 +90,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#fff',
     },
-
     rarityBadge: {
         alignSelf: 'flex-start',
         paddingHorizontal: 10,
@@ -106,10 +101,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#000',
     },
+
     priceText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#000',
         marginTop: 10,
     },
     buyButton: {
@@ -125,10 +120,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
     },
-    cardContent: {
-        flex: 1,
-        justifyContent: 'space-between',
-    },
 });
 
-export default CardRappeur;
+export default CardMyRappeur;

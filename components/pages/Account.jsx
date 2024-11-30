@@ -16,7 +16,7 @@ const Account = ({ navigation }) => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [currentCategory, setCurrentCategory] = useState('account');
-    const [isNight, setIsNight] = useState(false); // Ajout du mode nuit
+    const [isNight, setIsNight] = useState(false);
 
 
     const categories = [
@@ -83,6 +83,46 @@ const Account = ({ navigation }) => {
         setIsNight(!isNight);
     };
 
+    const handleLogout = async () => {
+        try {
+            const token = await AsyncStorage.getItem('authToken');
+
+            if (!token) {
+                console.error('No token found, skipping logout request');
+                return;
+            }
+
+            const response = await api.post(
+                `${pJson.proxy}/api/logout`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            console.log('Logout response:', response.data);
+
+            await AsyncStorage.removeItem('authToken');
+            await AsyncStorage.removeItem('id');
+            console.log('Token removed successfully');
+
+            setUser(null);
+            setName('');
+            setEmail('');
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+
+            navigation.navigate('Login');
+        } catch (error) {
+            console.error('Error during logout:', error);
+            Alert.alert('Erreur', 'Une erreur s\'est produite lors de la déconnexion.');
+        }
+    };
+
+
     const renderCategory = () => {
         switch (currentCategory) {
             case 'account':
@@ -113,6 +153,10 @@ const Account = ({ navigation }) => {
                             placeholderTextColor={isNight ? '#aaa' : '#999'}
                         />
                         <Button style={styles.save} title="Enregistrer les modifications" onClick={handleSaveChanges} />
+
+                        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+                            <Text style={styles.logoutText}>Déconnexion</Text>
+                        </TouchableOpacity>
                     </View>
                 );
             case 'password':
@@ -218,8 +262,17 @@ const styles = StyleSheet.create({
     title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
     input: { width: '100%', padding: 10, marginBottom: 15, borderWidth: 1, borderColor: '#ccc', borderRadius: 8 },
     helpText: { fontSize: 16, lineHeight: 22 },
-    footer: { position: 'absolute', bottom: 0, width: '100%' },
-    save: { backgroundColor: "#1993DF" }
+    footer: { position: 'absolute', bottom: 0, width: '100%', marginTop: 30 },
+    save: { backgroundColor: "#1993DF", marginTop: 20 },
+    logoutButton: {
+        backgroundColor: '#f00',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
+        alignItems: 'center',
+    },
+    logoutText: { color: '#fff', fontSize: 16 },
+    helpText: { fontSize: 14, textAlign: 'center', marginTop: 20 },
 });
 
 export default Account;

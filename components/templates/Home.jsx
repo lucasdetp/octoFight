@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import FooterNavBar from '../molecules/FooterNavbar';
 import { StatusBar } from 'expo-status-bar';
 import NightSwitch from '../atoms/Function/NightSwitch';
@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import * as pJson from '../../package.json';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 window.Pusher = Pusher;
 
@@ -65,10 +67,18 @@ const Home = () => {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: themeStyles.backgroundColor }]}>
             <StatusBar style={isNight ? 'light' : 'dark'} />
-            <ScrollView contentContainerStyle={{ padding: 16 }}>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Account')} style={[
+                styles.accountBubble,
+                { backgroundColor: isNight ? '#ffffff' : '#000000' },
+            ]}>
+                <MaterialCommunityIcons name="account" size={34} color={isNight ? '#000000' : '#ffffff'} />
+            </TouchableOpacity>
+
+            <ScrollView contentContainerStyle={{ padding: 16, marginTop: 20 }}>
                 {userInfo ? (
                     <View>
-                        <Text style={[styles.text, { color: themeStyles.color }]}>
+                        <Text style={[styles.text, { color: themeStyles.color, marginBottom: 30 }]}>
                             Bienvenue, {userInfo.name} !
                         </Text>
                     </View>
@@ -126,6 +136,22 @@ const styles = StyleSheet.create({
     },
     invitation: {
         marginVertical: 10,
+    },
+    accountBubble: {
+        position: 'absolute',
+        top: 60,
+        right: 20,
+        zIndex: 99,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
 });
 

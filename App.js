@@ -59,7 +59,7 @@ const AppNavigator = () => {
   console.log('userId:', userId);
   return (
 
-    <SocketProvider>
+    <UserProvider>
       <ThemeProvider>
         <OfflineNotice />
         <CheckBattle userId={userId} refreshKey={refreshKey}>
@@ -79,7 +79,7 @@ const AppNavigator = () => {
           </Stack.Navigator>
         </CheckBattle>
       </ThemeProvider>
-    </SocketProvider>
+    </UserProvider>
 
   );
 };
