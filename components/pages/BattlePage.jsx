@@ -10,6 +10,12 @@ import { Container, Text} from '../atoms';
 
 const BattlePage = ({ route }) => {
   const { battleId, userId } = route.params || {};
+
+  if (!battleId || !userId) {
+    console.error('Missing battleId or userId');
+  }
+
+
   const { socket } = useSocket();
   const [rappers, setRappers] = useState([]);
   const [selectedRapper, setSelectedRapper] = useState(null);
@@ -73,7 +79,12 @@ const BattlePage = ({ route }) => {
       socket.emit('rapperChosen', { battleId, userId, rapperId });
 
       Alert.alert('Succès', 'Rappeur choisi avec succès !');
-      navigation.goBack();
+      if (navigation && navigation.navigate) {
+        navigation.navigate('Home');
+      } else {
+        console.error('Navigation is not initialized yet.');
+      }
+      
     } catch (error) {
       console.error('Erreur lors de la sélection du rappeur:', error);
       Alert.alert('Erreur', 'Impossible de sélectionner ce rappeur.');

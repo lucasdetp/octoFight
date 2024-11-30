@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { Text, Button, Container } from '../atoms';
+import * as pJson from '../../package.json'
 window.Pusher = Pusher;
 
 const Home = () => {
@@ -29,42 +30,43 @@ const Home = () => {
 
     const openInviteModal = () => setModalVisible(true);
     const closeInviteModal = () => setModalVisible(false);
-const battleId = 1;
-    const echo = new Echo({
-        broadcaster: 'pusher',
-        key: '225d6e015dff0ed8b4f6',
-        cluster: 'eu',
-        forceTLS: true,
-        wsHost: '10.26.132.231',
-        wsPort: 8000,
-        disableStats: true,
-    });
+
+    // const echo = new Echo({
+    //     broadcaster: 'pusher',
+    //     key: '225d6e015dff0ed8b4f6',
+    //     cluster: 'eu',
+    //     forceTLS: true,
+    //     wsHost: '10.26.132.231',
+    //     wsPort: 8000,
+    //     disableStats: true,
+    // });
     
-    useEffect(() => {
-        if (battleId && userId) {
-            console.log('Connexion à Echo pour battleId:', battleId);
+    // useEffect(() => {
+    //     if (battleId && userId) {
+    //         console.log('Connexion à Echo pour battleId:', battleId);
     
-            echo.channel(`battle.${battleId}`)
-                .listen('BattleAccepted', (data) => {
-                    console.log('BattleAccepted:', data);
+    //         echo.channel(`battle.${battleId}`)
+    //             .listen('BattleAccepted', (data) => {
+    //                 console.log('BattleAccepted:', data);
     
-                    if (data.battle.user1_id === userId && !data.battle.user1_rapper_id) {
-                        navigation.navigate('ChooseRapperPage', { battleId, userId });
-                    } else if (data.battle.user2_id === userId && !data.battle.user2_rapper_id) {
-                        navigation.navigate('ChooseRapperPage', { battleId, userId });
-                    }
-                });
+    //                 if (data.battle.user1_id === userId && !data.battle.user1_rapper_id) {
+    //                     navigation.navigate('ChooseRapperPage', { battleId, userId });
+    //                 } else if (data.battle.user2_id === userId && !data.battle.user2_rapper_id) {
+    //                     navigation.navigate('ChooseRapperPage', { battleId, userId });
+    //                 }
+    //             });
     
-            return () => {
-                echo.leaveChannel(`battle.${battleId}`);
-            };
-        }
-    }, [battleId, userId]); 
+    //         return () => {
+    //             echo.leaveChannel(`battle.${battleId}`);
+    //         };
+    //     }
+    // }, [battleId, userId]); 
     
     const getUserIdFromStorage = async () => {
         const userToken = await AsyncStorage.getItem('token');
         if (userToken) {
-            const userResponse = await axios.get('http://10.26.132.231:8000/api/user', {
+            
+            const userResponse = await axios.get(`${pJson.proxy}/api/user`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
@@ -80,7 +82,7 @@ const battleId = 1;
 
     const fetchPendingInvitations = async () => {
         try {
-            const response = await axios.get(`http://10.26.132.231:8000/api/user/${userId}/pending-invitations`);
+            const response = await axios.get(`${pJson.proxy}/api/user/${userId}/pending-invitations`);
             setInvitations(response.data.invitations);
         } catch (error) {
             console.error('Erreur lors de la récupération des invitations:', error);
@@ -95,14 +97,14 @@ const battleId = 1;
         }
     
         try {
-            await axios.post(`http://10.26.132.231:8000/api/battle/${battleId}/accept`, {}, {
+            await axios.post(`${pJson.proxy}/api/battle/${battleId}/accept`, {}, {
                 headers: {
                     Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
                 },
             });
             Alert.alert('Succès', 'Invitation acceptée!');
-
-            console.log('battleId dans home:', battleId);
+            console.log('BattleId dynamique:', battleId);
+    
             if (battleId) { 
                 navigation.navigate('BattlePage', { battleId, userId });
             }
@@ -110,11 +112,11 @@ const battleId = 1;
             console.error("Erreur lors de l'acceptation de l'invitation:", error);
             Alert.alert('Erreur', "Impossible d'accepter l'invitation.");
         }
-    };
+    };    
 
     const handleDeclineInvitation = async (battleId) => {
         try {
-            await axios.delete(`http://10.26.132.231:8000/api/battle/${battleId}/decline`, {
+            await axios.delete(`${pJson.proxy}/api/battle/${battleId}/decline`, {
                 headers: {
                     Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
                 },

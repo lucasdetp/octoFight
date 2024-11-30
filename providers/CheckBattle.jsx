@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import BattlePage from '../components/pages/BattlePage';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ActivityIndicator } from 'react-native';
@@ -8,68 +7,47 @@ import { useSocket } from '../providers/SocketContext';
 import * as pJson from '../package.json';
 
 const CheckBattle = ({ children, userId }) => {
-    const [isBattle, setIsBattle] = useState(false);
-    const [battleId, setBattleId] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [hasRedirected, setHasRedirected] = useState(false);
-    const socket = useSocket();
+    const [isLoading, setIsLoading] = useState(true);
     const navigation = useNavigation();
-    let lastBattleStatus = null;
 
     useEffect(() => {
         let intervalId;
 
         const checkIfInBattle = async () => {
             try {
-                if (lastBattleStatus !== null && !hasRedirected) {
-                    setIsBattle(lastBattleStatus);
-                    return;
-                }
-
                 if (!userId) {
-                    setIsBattle(false);
+                    setIsLoading(false);
                     return;
-                }else{
-                    const token = await AsyncStorage.getItem('token');
-                    const url = `${pJson.proxy}/api/user/${userId}/battle`;
-                    const response = await axios.get(url, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-                    if (response.data.battle) {
-                        setIsBattle(true);
-                        setBattleId(response.data.battle.id);
-                        lastBattleStatus = response.data.battle ? true : false;
-    
-                        if (!hasRedirected) {
-                            setHasRedirected(true);
-                            navigation.navigate('BattlePage', { battleId: response.data.battle.id, userId });
-                        }
-                    } else {
-                        setIsBattle(false);
-                        setHasRedirected(false);
-                    }
                 }
 
+                const token = await AsyncStorage.getItem('token');
+                const url = `${pJson.proxy}/api/user/${userId}/battle`;
+
+                const response = await axios.get(url, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (response.data.battle) {
+                    const battleId = response.data.battle.id;
+
+                    navigation.navigate('BattlePage', { battleId, userId });
+                } else {
+                    setIsLoading(false);
+                }
             } catch (error) {
-                console.error("Erreur lors de la vérification de la battle:", error);
-                setIsBattle(false);
-                setHasRedirected(false);
-            } finally {
-                setLoading(false);
+                console.error('Erreur lors de la vérification de la battle:', error);
+                setIsLoading(false);
             }
         };
 
-        setLoading(true);
         checkIfInBattle();
 
         intervalId = setInterval(checkIfInBattle, 10000);
 
         return () => clearInterval(intervalId);
-    }, [userId, hasRedirected, navigation]);
+    }, [userId, navigation]);
 
-    if (loading) {
+    if (isLoading) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size="large" color="#ffffff" />
@@ -77,20 +55,7 @@ const CheckBattle = ({ children, userId }) => {
         );
     }
 
-    return (
-        <>
-            {isBattle ? (
-                <BattlePage
-                    route={{ params: { battleId, userId } }}
-                    navigation={navigation}
-                    socket={socket}
-                    setBattleId={setBattleId}
-                />
-            ) : (
-                children
-            )}
-        </>
-    );
+    return children;
 };
 
 export default CheckBattle;
