@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, View, StyleSheet, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import FooterNavBar from '../molecules/FooterNavbar';
 import { StatusBar } from 'expo-status-bar';
 import NightSwitch from '../atoms/Function/NightSwitch';
@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import { useNavigation } from '@react-navigation/native';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, Button, Container } from '../atoms';
 import * as pJson from '../../package.json'
 window.Pusher = Pusher;
@@ -138,13 +139,20 @@ const Home = () => {
     return (
         <Container.BasicSafeAreaView style={[styles.container, { backgroundColor: themeStyles.backgroundColor }]}>
             <StatusBar style={isNight ? 'light' : 'dark'} />
-            <Container.BasicScrollView contentContainerStyle={{ padding: 16 }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Account')} style={[
+                styles.accountBubble,
+                { backgroundColor: isNight ? '#ffffff' : '#000000' },
+            ]}>
+                <MaterialCommunityIcons name="account" size={34} color={isNight ? '#000000' : '#ffffff'} />
+            </TouchableOpacity>
+
+            <ScrollView contentContainerStyle={{ padding: 16, marginTop: 20 }}>
                 {userInfo ? (
-                    <Container.BasicView>
-                        <Text.Name style={[styles.text, { color: themeStyles.color }]}>
+                    <View>
+                        <Text style={[styles.text, { color: themeStyles.color, marginBottom: 30 }]}>
                             Bienvenue, {userInfo.name} !
-                        </Text.Name>
-                    </Container.BasicView>
+                        </Text>
+                    </View>
                 ) : (
                     <Text.Name style={[styles.text, { color: themeStyles.color }]}>
                         Bienvenue !
@@ -179,7 +187,7 @@ const Home = () => {
                 ) : (
                     <Text.Name style={[styles.text, { color: themeStyles.color }]}>Aucune invitation en attente</Text.Name>
                 )}
-            </Container.BasicScrollView>
+            </ScrollView>
             <FooterNavBar />
             <InviteModal visible={isModalVisible} onClose={closeInviteModal} />
         </Container.BasicSafeAreaView>
@@ -203,6 +211,22 @@ const styles = StyleSheet.create({
     },
     invitation: {
         marginVertical: 10,
+    },
+    accountBubble: {
+        position: 'absolute',
+        top: 60,
+        right: 20,
+        zIndex: 99,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     customButtonStyle: {
         backgroundColor: '#fe3111', // Couleur personnalisée

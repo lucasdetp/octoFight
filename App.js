@@ -61,27 +61,29 @@ const AppNavigator = () => {
   console.log('userId:', userId);
   return (
 
-    <SocketProvider>
-      <OctoThemeProvider>
-        <OfflineNotice />
-        <CheckBattle userId={userId} refreshKey={refreshKey}>
-          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
-            <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="Deck" component={Deck} />
-            <Stack.Screen name="BattlePage">
-              {props =>
-                <BattlePage
-                  {...props} userId={userId} socket={socket} userInfo={userInfo}
-                />}
-            </Stack.Screen>
-          </Stack.Navigator>
-        </CheckBattle>
-      </OctoThemeProvider>
-    </SocketProvider>
+    <UserProvider>
+      <SocketProvider>
+        <OctoThemeProvider>
+          <OfflineNotice />
+          <CheckBattle userId={userId} refreshKey={refreshKey}>
+            <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+              <Stack.Screen name="Account" component={Account} />
+              <Stack.Screen name="Deck" component={Deck} />
+              <Stack.Screen name="BattlePage">
+                {props =>
+                  <BattlePage
+                    {...props} userId={userId} socket={socket} userInfo={userInfo}
+                  />}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </CheckBattle>
+        </OctoThemeProvider>
+      </SocketProvider>
+    </UserProvider>
 
   );
 };

@@ -27,9 +27,21 @@ const FooterNavBar = () => {
     ]
     return (
         <View style={[styles.footerContainer, { backgroundColor: isNight ? '#000000' : '#ffffff' }]}>
-            {config.map((item, index) => {
-                return <IconButton key={index} {...item} />
-            })}
+            <TouchableOpacity onPress={() => navigation.navigate('LaunchBattle')}>
+                <MaterialCommunityIcons name="cards" size={34} color={isNight ? '#ffffff' : '#000000'} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <MaterialCommunityIcons name="home" size={34} color={isNight ? '#ffffff' : '#000000'} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Deck')}>
+                <MaterialCommunityIcons name="cards-playing-outline" size={34} color={isNight ? '#ffffff' : '#000000'} />
+            </TouchableOpacity>
+
+
+            //{config.map((item, index) => {
+              //  return <IconButton key={index} {...item} />
+            // })}
+
         </View>
     );
 };
