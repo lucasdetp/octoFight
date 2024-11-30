@@ -5,7 +5,7 @@ import { Card } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from '../atoms';
-import { useTheme } from '../../providers/ThemeProvider';
+import { useTheme } from '../../providers/OctoThemeProvider';
 import * as pJson from '../../package.json';
 import { UserContext } from '../../providers/UserContext';
 import { FooterNavBar } from '../molecules';

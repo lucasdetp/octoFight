@@ -6,7 +6,7 @@ import FooterNavBar from './components/molecules/FooterNavbar';
 import { LaunchBattle, Login, Register, Account, BattlePage, Deck } from './components/pages';
 import { Home } from './components/templates';
 import { useColorScheme } from 'react-native';
-import { ThemeProvider } from './providers/ThemeProvider';
+import { OctoThemeProvider } from './providers/OctoThemeProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SocketProvider } from './providers/SocketContext';
 import { View, Text, StyleSheet } from 'react-native';
@@ -22,11 +22,12 @@ export default function App() {
 
   return (
     <UserProvider>
-      <ThemeProvider>
+      <OctoThemeProvider>
+
         <NavigationContainer>
           <AppNavigator />
         </NavigationContainer>
-      </ThemeProvider>
+      </OctoThemeProvider>
     </UserProvider>
   );
 }
@@ -60,7 +61,7 @@ const AppNavigator = () => {
   return (
 
     <SocketProvider>
-      <ThemeProvider>
+      <OctoThemeProvider>
         <OfflineNotice />
         <CheckBattle userId={userId} refreshKey={refreshKey}>
           <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
@@ -78,7 +79,7 @@ const AppNavigator = () => {
             </Stack.Screen>
           </Stack.Navigator>
         </CheckBattle>
-      </ThemeProvider>
+      </OctoThemeProvider>
     </SocketProvider>
 
   );
