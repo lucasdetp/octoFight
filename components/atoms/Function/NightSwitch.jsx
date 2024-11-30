@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from '../../../providers/ThemeProvider';
+import { useTheme } from '../../../providers/OctoThemeProvider';
 
 const NightSwitch = () => {
     const { isNight, toggleTheme } = useTheme();

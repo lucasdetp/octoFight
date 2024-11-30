@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useSocket } from '../../providers/SocketContext';
 import * as pJson from '../../package.json';
+import { Container, Text} from '../atoms';
 
 const BattlePage = ({ route }) => {
   const { battleId, userId } = route.params || {};
+
+  if (!battleId || !userId) {
+    console.error('Missing battleId or userId');
+  }
+
+
   const { socket } = useSocket();
   const [rappers, setRappers] = useState([]);
   const [selectedRapper, setSelectedRapper] = useState(null);
@@ -43,7 +50,6 @@ const BattlePage = ({ route }) => {
   useEffect(() => {
     if (socket && battleId) {
       socket.on(`battle.${battleId}`, (data) => {
-        console.log('Mise à jour de la bataille:', data);
 
         if (data.message.includes('Sélectionnez vos rappeurs')) {
           if (data.battle.user1_id === userId && !data.battle.user1_rapper_id) {
@@ -63,8 +69,6 @@ const BattlePage = ({ route }) => {
   }, [socket, battleId]);
 
   const handleSelectRapper = async (rapperId) => {
-    console.log('userIdhere :', userId);
-    
     try {
       await axios.post(
         `${pJson.proxy}/api/battle/${battleId}/choose-rapper`,
@@ -75,17 +79,21 @@ const BattlePage = ({ route }) => {
       socket.emit('rapperChosen', { battleId, userId, rapperId });
 
       Alert.alert('Succès', 'Rappeur choisi avec succès !');
-      navigation.goBack();
+      if (navigation && navigation.navigate) {
+        navigation.navigate('Home');
+      } else {
+        console.error('Navigation is not initialized yet.');
+      }
+      
     } catch (error) {
       console.error('Erreur lors de la sélection du rappeur:', error);
       Alert.alert('Erreur', 'Impossible de sélectionner ce rappeur.');
     }
   };
 
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sélectionnez votre rappeur</Text>
+    <Container.BasicView style={styles.container}>
+      <Text.Name style={styles.title}>Sélectionnez votre rappeur</Text.Name>
       <Picker
         selectedValue={selectedRapper}
         onValueChange={(value) => {
@@ -98,15 +106,16 @@ const BattlePage = ({ route }) => {
         ))}
       </Picker>
       {opponentRapper && (
-        <Text style={styles.info}>Rappeur choisi par l'adversaire : {opponentRapper}</Text>
+        <Text.Name style={styles.info}>Rappeur choisi par l'adversaire : {opponentRapper}</Text.Name>
       )}
-    </View>
+    </Container.BasicView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    marginTop: 60,
   },
   title: {
     fontSize: 24,

@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import StyledButton from '../nanites/DOM/StyledButton';
+import { Container } from '../atoms';
 
 const Menu = ({ configs, onMenuChange }) => {
     return (
-        <View style={styles.container}>
+        <Container.BasicView style={styles.container}>
             {configs.map((config, index) => (
                 <StyledButton
                     key={index}
@@ -12,7 +13,7 @@ const Menu = ({ configs, onMenuChange }) => {
                     onPress={() => onMenuChange(config.slug)}
                 />
             ))}
-        </View>
+        </Container.BasicView>
     );
 };
 

@@ -5,7 +5,7 @@ import { Card } from '../organisme';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from '../atoms';
-import { useTheme } from '../../providers/ThemeProvider';
+import { useTheme } from '../../providers/OctoThemeProvider';
 
 const Deck = ({ navigation }) => {
     const [rappers, setRappers] = useState([]);
@@ -15,7 +15,6 @@ const Deck = ({ navigation }) => {
     const scrollViewRef = useRef(null);
     const { isNight } = useTheme();
 
-    // Définir la fonction fetchDeck
     const fetchDeck = async () => {
         try {
             const token = await AsyncStorage.getItem('authToken');
@@ -32,7 +31,6 @@ const Deck = ({ navigation }) => {
                 },
             });
 
-            // Tri des rappeurs par rareté (légendaire, épique, rare, commun)
             const rarityOrder = {
                 'légendaire': 1,
                 'épique': 2,

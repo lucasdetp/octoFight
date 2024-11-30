@@ -6,7 +6,7 @@ import FooterNavBar from './components/molecules/FooterNavbar';
 import { LaunchBattle, Login, Register, Account, BattlePage, Deck } from './components/pages';
 import { Home } from './components/templates';
 import { useColorScheme } from 'react-native';
-import { ThemeProvider } from './providers/ThemeProvider';
+import { OctoThemeProvider } from './providers/OctoThemeProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SocketProvider } from './providers/SocketContext';
 import { View, Text, StyleSheet } from 'react-native';
@@ -14,6 +14,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import CheckBattle from './providers/CheckBattle';
 import OfflineNotice from './components/OfflineNotice';
+import * as pJson from './package.json';
 
 const Stack = createStackNavigator();
 
@@ -22,11 +23,12 @@ export default function App() {
 
   return (
     <UserProvider>
-      <ThemeProvider>
+      <OctoThemeProvider>
+
         <NavigationContainer>
           <AppNavigator />
         </NavigationContainer>
-      </ThemeProvider>
+      </OctoThemeProvider>
     </UserProvider>
   );
 }
@@ -40,7 +42,7 @@ const AppNavigator = () => {
   const getUserIdFromStorage = async () => {
     const userToken = await AsyncStorage.getItem('token');
     if (userToken) {
-      const response = await axios.get('http://10.26.132.231:8000/api/user', {
+      const response = await axios.get(`${pJson.proxy}/api/user`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -50,7 +52,7 @@ const AppNavigator = () => {
   };
 
   useEffect(() => {
-    const socketInstance = io('http://10.26.132.231:8000');
+    const socketInstance = io(`${pJson.proxy}:8000`);
     setSocket(socketInstance);
     return () => {
       socketInstance.disconnect();
@@ -60,25 +62,27 @@ const AppNavigator = () => {
   return (
 
     <UserProvider>
-      <ThemeProvider>
-        <OfflineNotice />
-        <CheckBattle userId={userId} refreshKey={refreshKey}>
-          <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
-            <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="Deck" component={Deck} />
-            <Stack.Screen name="BattlePage">
-              {props =>
-                <BattlePage
-                  {...props} userId={userId} socket={socket} userInfo={userInfo}
-                />}
-            </Stack.Screen>
-          </Stack.Navigator>
-        </CheckBattle>
-      </ThemeProvider>
+      <SocketProvider>
+        <OctoThemeProvider>
+          <OfflineNotice />
+          <CheckBattle userId={userId} refreshKey={refreshKey}>
+            <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="LaunchBattle" component={LaunchBattle} />
+              <Stack.Screen name="Account" component={Account} />
+              <Stack.Screen name="Deck" component={Deck} />
+              <Stack.Screen name="BattlePage">
+                {props =>
+                  <BattlePage
+                    {...props} userId={userId} socket={socket} userInfo={userInfo}
+                  />}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </CheckBattle>
+        </OctoThemeProvider>
+      </SocketProvider>
     </UserProvider>
 
   );

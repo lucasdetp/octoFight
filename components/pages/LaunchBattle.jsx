@@ -4,7 +4,7 @@ import { SafeAreaView, ScrollView, View, StyleSheet, ActivityIndicator, Touchabl
 import { Card } from '../organisme';
 import axios from 'axios';
 import { Text } from '../atoms';
-import { useTheme } from '../../providers/ThemeProvider';
+import { useTheme } from '../../providers/OctoThemeProvider';
 import * as pJson from '../../package.json';
 import { UserContext } from '../../providers/UserContext';
 import { FooterNavBar } from '../molecules';

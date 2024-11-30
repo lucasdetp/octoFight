@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeProvider } from 'styled-components/native';
 
 const ThemeContext = createContext();
 
@@ -7,7 +8,12 @@ export const useTheme = () => {
     return useContext(ThemeContext);
 };
 
-export const ThemeProvider = ({ children }) => {
+export const OctoThemeProvider = ({ children }) => {
+
+    const theme = { icon: "black", primary: "white" }
+    const nightTheme = { icon: "white", primary: "black" }
+
+
     const [isNight, setIsNight] = useState(false);
 
     useEffect(() => {
@@ -36,7 +42,7 @@ export const ThemeProvider = ({ children }) => {
 
     return (
         <ThemeContext.Provider value={{ isNight, toggleTheme }}>
-            {children}
+            <ThemeProvider theme={isNight ? nightTheme : theme}>{children}</ThemeProvider>
         </ThemeContext.Provider>
     );
 };
