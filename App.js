@@ -14,6 +14,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import CheckBattle from './providers/CheckBattle';
 import OfflineNotice from './components/OfflineNotice';
+import * as pJson from './package.json';
 
 const Stack = createStackNavigator();
 
@@ -41,7 +42,7 @@ const AppNavigator = () => {
   const getUserIdFromStorage = async () => {
     const userToken = await AsyncStorage.getItem('token');
     if (userToken) {
-      const response = await axios.get('http://10.26.132.231:8000/api/user', {
+      const response = await axios.get(`${pJson.proxy}/api/user`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -51,7 +52,7 @@ const AppNavigator = () => {
   };
 
   useEffect(() => {
-    const socketInstance = io('http://10.26.132.231:8000');
+    const socketInstance = io(`${pJson.proxy}:8000`);
     setSocket(socketInstance);
     return () => {
       socketInstance.disconnect();
