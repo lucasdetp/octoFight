@@ -29,35 +29,29 @@ const CheckBattle = ({ children, userId }) => {
                 if (!userId) {
                     setIsBattle(false);
                     return;
-                }
-
-                if (!navigation || typeof navigation.navigate !== 'function') {
-                    console.error('Navigation not initialized');
-                    return null;
-                }
-
-                const token = await AsyncStorage.getItem('token');
-                // const url = `${pJson.proxy}/api/user/${userId}/battle`;
-
-                const response = await axios.get(url, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (response.data.battle) {
-                    setIsBattle(true);
-                    setBattleId(response.data.battle.id);
-                    lastBattleStatus = response.data.battle ? true : false;
-
-                    if (!hasRedirected) {
-                        setHasRedirected(true);
-                        navigation.navigate('BattlePage', { battleId: response.data.battle.id, userId });
+                }else{
+                    const token = await AsyncStorage.getItem('token');
+                    const url = `${pJson.proxy}/api/user/${userId}/battle`;
+                    const response = await axios.get(url, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    if (response.data.battle) {
+                        setIsBattle(true);
+                        setBattleId(response.data.battle.id);
+                        lastBattleStatus = response.data.battle ? true : false;
+    
+                        if (!hasRedirected) {
+                            setHasRedirected(true);
+                            navigation.navigate('BattlePage', { battleId: response.data.battle.id, userId });
+                        }
+                    } else {
+                        setIsBattle(false);
+                        setHasRedirected(false);
                     }
-                } else {
-                    setIsBattle(false);
-                    setHasRedirected(false);
                 }
+
             } catch (error) {
                 console.error("Erreur lors de la vérification de la battle:", error);
                 setIsBattle(false);

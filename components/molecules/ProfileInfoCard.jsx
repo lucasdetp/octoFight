@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import Base from '../atoms/Button/Base';
-import Button from '../atoms/Button/Button';
+import { StyleSheet } from 'react-native';
+import { Container, Button } from '../atoms';
 
 const ProfileInfoCard = ({ name, email, onLogout }) => {
     return (
-        <View style={styles.card}>
-            <View style={styles.infoContainer}>
-                <Base title={`Nom: ${name}`} style={styles.text} />
-                <Base title={`Email: ${email}`} style={styles.text} />
-            </View>
-            <Button title="Se déconnecter" onClick={onLogout} style={styles.logoutButton} />
-        </View>
+        <Container.BasicView style={styles.card}>
+            <Container.BasicView style={styles.infoContainer}>
+                <Button.Base title={`Nom: ${name}`} style={styles.text} />
+                <Button.Base title={`Email: ${email}`} style={styles.text} />
+            </Container.BasicView>
+            <Button.Button title="Se déconnecter" onClick={onLogout} style={styles.logoutButton} />
+        </Container.BasicView>
     );
 };
 

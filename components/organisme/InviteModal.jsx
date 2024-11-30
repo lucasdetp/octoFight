@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { Modal, StyleSheet } from 'react-native';
 import { sendInvite } from '../axiosConfig';
 import axios from 'axios';
+import * as pJson from '../../package.json';
+import { Container, Text, Button } from '../atoms';
 
 const InviteModal = ({ visible, onClose }) => {
     const [username, setUsername] = useState('');
@@ -26,8 +28,7 @@ const InviteModal = ({ visible, onClose }) => {
 
     const getUserIdByUsername = async (username) => {
         try {
-            console.log('username', username);
-            const response = await axios.get(`http://10.26.132.231:8000/api/user/by-username/${username}`);
+            const response = await axios.get(`${pJson.proxy}/api/user/by-username/${username}`);
             return response.data.id;
         } catch (error) {
             console.error('Erreur lors de la récupération de l\'ID de l\'utilisateur', error);
@@ -37,18 +38,18 @@ const InviteModal = ({ visible, onClose }) => {
 
     return (
         <Modal visible={visible} animationType="slide">
-            <View style={styles.container}>
-                <Text style={styles.header}>Inviter un utilisateur à un combat</Text>
-                <TextInput
-                    placeholder="Nom d'utilisateur a"
+            <Container.BasicView style={styles.container}>
+                <Text.Name style={styles.header}>Inviter un utilisateur à un combat</Text.Name>
+                <Text.BasicTextInput
+                    placeholder="Nom d'utilisateur à inviter"
                     value={username}
                     onChangeText={setUsername}
                     style={styles.input}
                 />
                 {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-                <Button title="Inviter" onPress={handleInvite} />
-                <Button title="Annuler" onPress={onClose} />
-            </View>
+                <Button.Button title="Inviter" onClick={handleInvite} />
+                <Button.Button title="Annuler" onClick={onClose} />
+            </Container.BasicView>
         </Modal>
     );
 };

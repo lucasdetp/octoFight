@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
-import Button from '../../components/atoms/Button/Button'; // Assurez-vous du bon chemin d'import
+import { View, StyleSheet, Alert } from 'react-native';
 import api from '../api';
 import * as pJson from '../../package.json';
+import { Button, Text, Container } from '../atoms';
 
 const Register = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -28,7 +28,7 @@ const Register = ({ navigation }) => {
             if (response.status === 201) {
                 console.log('Registration successful:', response.data);
                 Alert.alert('Succès', 'Inscription réussie');
-                navigation.navigate('Login'); // Naviguer vers la page de connexion après l'inscription réussie
+                navigation.navigate('Login');
             }
         } catch (error) {
             if (error.response) {
@@ -42,16 +42,16 @@ const Register = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Register</Text>
-            <TextInput
+        <Container.BasicView style={styles.container}>
+            <Text.Name style={styles.title}>S'inscrire</Text.Name>
+            <Text.BasicTextInput
                 style={styles.input}
-                placeholder="Name"
+                placeholder="Prénom"
                 value={name}
                 onChangeText={setName}
                 placeholderTextColor="#999"
             />
-            <TextInput
+            <Text.BasicTextInput
                 style={styles.input}
                 placeholder="Email"
                 value={email}
@@ -59,27 +59,25 @@ const Register = ({ navigation }) => {
                 keyboardType="email-address"
                 placeholderTextColor="#999"
             />
-            <TextInput
+            <Text.BasicTextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Mot de passe"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <TextInput
+            <Text.BasicTextInput
                 style={styles.input}
-                placeholder="Confirm Password"
+                placeholder="Confirmer le mot de passe"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
                 placeholderTextColor="#999"
             />
-            <Button title="Register" onClick={handleRegister} />
-            <Text style={styles.loginText} onPress={() => navigation.navigate('Login')}>
-                Already have an account? Login
-            </Text>
-        </View>
+            <Button.Button title="S'inscire" onClick={handleRegister} />
+            <Text.RedirectLink text="Vous avez déjà un compte? Connectez-vous"  style={styles.loginText} onPress={() => navigation.navigate('Login')}/>
+        </Container.BasicView>
     );
 };
 

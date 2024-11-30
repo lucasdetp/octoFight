@@ -1,23 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Button from '../atoms/Button/Button';
+import { StyleSheet } from 'react-native';
+import { Container, Text, Button } from '../atoms';
 
 const AccountTemplate = ({ user, onLogout, onUpdate }) => {
     if (!user) {
         return (
-            <View style={styles.container}>
-                <Text>Erreur lors de la récupération des informations utilisateur.</Text>
-            </View>
+            <Container.BasicView style={styles.container}>
+                <Text.Name>Erreur lors de la récupération des informations utilisateur.</Text.Name>
+            </Container.BasicView>
         );
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Bienvenue {user.name} !</Text>
-            <Button title="Mettre à jour le profil" onClick={onUpdate} />
-            <Button title="Déconnexion" onClick={onLogout} />
-            <Button title="Changer le mot de passe" onClick={() => console.log('Change password')} />
-        </View>
+        <Container.BasicView style={styles.container}>
+            <Text.Name style={styles.title}>Bienvenue {user.name} !</Text.Name>
+            <Button.Button title="Mettre à jour le profil" onClick={onUpdate} />
+            <Button.Button title="Déconnexion" onClick={onLogout} />
+            <Button.Button title="Changer le mot de passe" onClick={() => console.log('Change password')} />
+        </Container.BasicView>
     );
 };
 
