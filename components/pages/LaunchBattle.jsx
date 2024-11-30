@@ -130,7 +130,7 @@ const LaunchBattle = ({ navigation, route }) => {
     const token = await getToken();
 
     try {
-      const response = await axios.get(`${pJson.proxy}/api/user/${userId}/rappers`, {
+      const response = await axios.get(`${pJson.proxy}/api/user/${userId}/my-rappers`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

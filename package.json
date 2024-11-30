@@ -2,7 +2,7 @@
   "name": "octofight",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
-  "proxy": "http://192.168.1.192:8000",
+  "proxy": "https://a09f-78-246-183-225.ngrok-free.app",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

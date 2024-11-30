@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, View, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import FooterNavBar from '../molecules/FooterNavbar';
 import { StatusBar } from 'expo-status-bar';
 import NightSwitch from '../atoms/Function/NightSwitch';
@@ -41,32 +41,32 @@ const Home = () => {
     //     wsPort: 8000,
     //     disableStats: true,
     // });
-    
+
     // useEffect(() => {
     //     if (battleId && userId) {
     //         console.log('Connexion à Echo pour battleId:', battleId);
-    
+
     //         echo.channel(`battle.${battleId}`)
     //             .listen('BattleAccepted', (data) => {
     //                 console.log('BattleAccepted:', data);
-    
+
     //                 if (data.battle.user1_id === userId && !data.battle.user1_rapper_id) {
     //                     navigation.navigate('ChooseRapperPage', { battleId, userId });
     //                 } else if (data.battle.user2_id === userId && !data.battle.user2_rapper_id) {
     //                     navigation.navigate('ChooseRapperPage', { battleId, userId });
     //                 }
     //             });
-    
+
     //         return () => {
     //             echo.leaveChannel(`battle.${battleId}`);
     //         };
     //     }
     // }, [battleId, userId]); 
-    
+
     const getUserIdFromStorage = async () => {
         const userToken = await AsyncStorage.getItem('token');
         if (userToken) {
-            
+
             const userResponse = await axios.get(`${pJson.proxy}/api/user`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
@@ -94,9 +94,9 @@ const Home = () => {
     const handleAcceptInvitation = async (battleId) => {
         if (!userId) {
             Alert.alert('Erreur', 'Utilisateur non identifié');
-            return; 
+            return;
         }
-    
+
         try {
             await axios.post(`${pJson.proxy}/api/battle/${battleId}/accept`, {}, {
                 headers: {
@@ -105,15 +105,15 @@ const Home = () => {
             });
             Alert.alert('Succès', 'Invitation acceptée!');
             console.log('BattleId dynamique:', battleId);
-    
-            if (battleId) { 
+
+            if (battleId) {
                 navigation.navigate('BattlePage', { battleId, userId });
             }
         } catch (error) {
             console.error("Erreur lors de l'acceptation de l'invitation:", error);
             Alert.alert('Erreur', "Impossible d'accepter l'invitation.");
         }
-    };    
+    };
 
     const handleDeclineInvitation = async (battleId) => {
         try {
@@ -149,20 +149,20 @@ const Home = () => {
             <ScrollView contentContainerStyle={{ padding: 16, marginTop: 20 }}>
                 {userInfo ? (
                     <View>
-                        <Text style={[styles.text, { color: themeStyles.color, marginBottom: 30 }]}>
+                        <Text.Name style={[styles.text, { color: themeStyles.color, marginBottom: 30 }]}>
                             Bienvenue, {userInfo.name} !
-                        </Text>
+                        </Text.Name>
                     </View>
                 ) : (
                     <Text.Name style={[styles.text, { color: themeStyles.color }]}>
                         Bienvenue !
                     </Text.Name>
                 )}
-                <Button.Button 
-                    title="Inviter un utilisateur à un combat" 
-                    onClick={openInviteModal} 
-                    buttonStyle={styles.customButtonStyle} 
-                    textStyle={styles.customTextStyle} 
+                <Button.Button
+                    title="Inviter un utilisateur à un combat"
+                    onClick={openInviteModal}
+                    buttonStyle={styles.customButtonStyle}
+                    textStyle={styles.customTextStyle}
                 />
 
                 {invitations.length > 0 ? (
