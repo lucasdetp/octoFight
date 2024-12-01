@@ -27,7 +27,7 @@ Avant de commencer, assurez-vous que les outils suivants sont installés :
 
 Clonez le dépôt GitHub et accédez au répertoire du projet backend :
 
-```
+```bash
 git clone https://github.com/lucasdetp/octoFightApi.git
 cd octoFightApi
 ```
@@ -35,18 +35,19 @@ cd octoFightApi
 ### 2. Installer les dépendances
 Installez les dépendances PHP :
 
-```
+```bash
 composer install
 ```
 
 Installez les dépendances Node.js :
-```
+```bash
 npm install
 ```
 
 ### 3. Configurer le .env
 Connectez votre base de donnée MySQL
-Ajoutez vos clés API pour Spotify et Pusher.
+Ajoutez vos clés API pour **[Spotify](https://developer.spotify.com/)**  et **[Pusher](https://pusher.com/docs/)** 
+.
 
 
 ### 4. Exécuter les migrations
@@ -114,6 +115,7 @@ Lancez l'application :
 
 Scannez le QR code avec l'application Expo Go (disponible sur votre appareil mobile). Si vous utilisez un simulateur, appuyez sur la touche i pour iOS ou a pour Android.
 
+---
 ## 💻 Exemples de commandes Git pour les contributeurs
 
 Créer une nouvelle branche 
